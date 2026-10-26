@@ -34,6 +34,7 @@ class _BatchReceipt:
 
 
 _TextResult: TypeAlias = tuple[EmbeddingVector, _BatchReceipt]
+_Batch: TypeAlias = tuple[tuple[str, asyncio.Future[_TextResult]], ...]
 
 
 class CoalescingEmbeddingModel:
@@ -111,19 +112,22 @@ class CoalescingEmbeddingModel:
             self._tasks.add(task)
             task.add_done_callback(self._tasks.discard)
 
-    async def _run_batch(self, batch: tuple[tuple[str, asyncio.Future[_TextResult]], ...]) -> None:
+    def _complete_batch(self, batch: _Batch, result: EmbeddingResult) -> None:
+        if len(result.vectors) != len(batch):
+            raise ValueError("embedding vector count does not match the batch")  # noqa: TRY003
+        receipt = _BatchReceipt(result.usage)
+        for (text, future), vector in zip(batch, result.vectors, strict=True):
+            if self._cache_size:
+                self._cache[text] = vector
+                self._cache.move_to_end(text)
+                if len(self._cache) > self._cache_size:
+                    self._cache.popitem(last=False)
+            future.set_result((vector, receipt))
+
+    async def _run_batch(self, batch: _Batch) -> None:
         try:
             result = await self._model.embed(tuple(text for text, _ in batch))
-            if len(result.vectors) != len(batch):
-                raise ValueError("embedding vector count does not match the batch")  # noqa: TRY003
-            receipt = _BatchReceipt(result.usage)
-            for (text, future), vector in zip(batch, result.vectors, strict=True):
-                if self._cache_size:
-                    self._cache[text] = vector
-                    self._cache.move_to_end(text)
-                    if len(self._cache) > self._cache_size:
-                        self._cache.popitem(last=False)
-                future.set_result((vector, receipt))
+            self._complete_batch(batch, result)
         except asyncio.CancelledError:
             for _, future in batch:
                 future.cancel()

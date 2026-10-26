@@ -82,7 +82,7 @@ def test_failed_batch_does_not_poison_independent_batch_or_retry() -> None:
             async def embed(self, texts: tuple[str, ...]) -> EmbeddingResult:
                 if texts == ("bad",) and ("failed",) not in self.calls:
                     self.calls.append(("failed",))
-                    raise RuntimeError("offline failure")
+                    raise RuntimeError("offline failure")  # noqa: TRY003
                 return await super().embed(texts)
 
         base = Flaky()
@@ -160,7 +160,7 @@ def test_abandoned_failure_does_not_leak_unhandled_exceptions() -> None:
                     started.set()
                     await release.wait()
                     finished.set()
-                    raise RuntimeError("abandoned provider failure")
+                    raise RuntimeError("abandoned provider failure")  # noqa: TRY003
                 return await super().embed(texts)
 
         base = Flaky()
