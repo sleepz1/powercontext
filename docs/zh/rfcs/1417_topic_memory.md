@@ -745,6 +745,7 @@ score，并交错填充结果。请求的 `max_bytes` 是最终输出的统一�
 | 配置 | 默认值 | 语义 |
 |---|---:|---|
 | `runtime.topic_memory_schedule_seconds` | `None` | 未配置时关闭自动波次；大于 0 时为波次间隔；小于等于 0 为配置错误 |
+| `runtime.topic_memory_source_count_threshold` | `None` | 未配置时关闭数量准入。严格正整数表示成功游标之后的新 journal 身份达到该数量时接受一个波次。与时间间隔为 OR。已接受波次的后续窗口不再套用门槛。显式 flush 绕过数量门槛。 |
 | `runtime.topic_memory_source_window_limit` | `10` | 一个 Window 最多包含的 Source 数 |
 | `runtime.topic_memory_history_max_candidates` | `20` | 历史 Topic 候选上限 |
 | `runtime.topic_memory_history_rrf_threshold` | `70` | 0..100 归一化 RRF 接纳阈值 |
