@@ -166,6 +166,7 @@ from powercontext.builtin.runtime._scope_cache import (
     ScopeCacheObserver,
     ScopeEvictor,
 )
+from powercontext.builtin.runtime.context_pack import ContextPack, ContextPackDelta, ContextPackError
 from powercontext.builtin.runtime.decision_model import DecisionModel
 from powercontext.builtin.runtime.errors import InvalidRuntimeRequestError, TopicMemoryProcessingUnavailableError
 from powercontext.builtin.runtime.models import (
@@ -846,6 +847,31 @@ class ScopedContextApplication:
             if authorize_scopes is not None:
                 await authorize_scopes((self.scope_id, *scope.context_references))
             return await self._prepare(request, scope)
+
+    async def prepare_incremental(
+        self,
+        request: PrepareContextRequest,
+        /,
+        base_pack: ContextPack | None = None,
+        *,
+        authorize_scopes: Callable[[tuple[str, ...]], Awaitable[None]] | None = None,
+    ) -> ContextPack | ContextPackDelta:
+        """Send the ordinary prepare body as a pack, or a delta from a validated base pack.
+
+        An empty prepare (``content is None``) is an empty pack. The receiver rebuilds the
+        body from the serialized pack and delta, so this method does not retain a private cache.
+        """
+
+        prepared = await self.prepare(request, authorize_scopes=authorize_scopes)
+        target = ContextPack.from_content("" if prepared.content is None else prepared.content)
+        if base_pack is None:
+            return target
+        if type(base_pack) is not ContextPack:
+            raise ContextPackError("invalid-base-pack")
+        canonical = ContextPack.build(base_pack.items)
+        if canonical.digest != base_pack.digest or canonical.byte_count != base_pack.byte_count:
+            raise ContextPackError("invalid-base-pack")
+        return ContextPackDelta.between(canonical, target)
 
     async def _prepare(self, request: PrepareContextRequest, scope: ScopeDescriptor, /) -> PreparedContext:
         build, effort = await self._prepare_build(request, scope)
@@ -2595,7 +2621,9 @@ class ScopedMemoryApplication:
                     if span is not None:
                         span.set_attributes({"powercontext.memory.flush.source_count": result.source_count})
                         span.set_outcome("success" if result.processed else "noop")
-                    return result
+                if self._runtime._record_service is not None:
+                    await self._runtime._record_service.admit_configured_source_counts(self.scope_id)
+                return result
 
     async def cursor(self) -> SourceCursor:
         async with self._runtime._context(self.scope_id) as context:
