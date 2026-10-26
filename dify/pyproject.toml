@@ -1,0 +1,10 @@
+[project]
+name = "powercontext-dify"
+version = "0.0.1"
+description = "Skeleton Dify tool plugin for a separate PowerContext Server."
+readme = "docs/PLUGIN.md"
+requires-python = ">=3.12"
+dependencies = ["dify-plugin==0.10.2"]
+
+[tool.uv]
+package = false
