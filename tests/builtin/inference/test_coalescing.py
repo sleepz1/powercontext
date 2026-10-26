@@ -1,4 +1,5 @@
 """Boundary regressions beyond the official PC-8 public acceptance."""
+
 from __future__ import annotations
 
 import asyncio
@@ -9,6 +10,7 @@ import pytest
 from powercontext.builtin.artifacts.memory import EmbeddingProfile
 from powercontext.builtin.inference import EmbeddingResult, InferenceUsage
 from powercontext.builtin.inference.coalescing import CoalescingEmbeddingModel
+from powercontext.builtin.inference.protocols import embed_query
 
 
 class Embedding:
@@ -61,9 +63,7 @@ def test_distinct_batches_charge_provider_usage_once_per_call() -> None:
     async def scenario() -> None:
         base = Embedding()
         model = CoalescingEmbeddingModel(base, max_batch_size=2, coalesce_ms=0)
-        first, second = await asyncio.gather(
-            model.embed(("a", "bb", "a", "ccc")), model.embed(("bb", "bb", "ccc"))
-        )
+        first, second = await asyncio.gather(model.embed(("a", "bb", "a", "ccc")), model.embed(("bb", "bb", "ccc")))
         assert first.vectors == ((1.0,), (2.0,), (1.0,), (3.0,))
         assert second.vectors == ((2.0,), (2.0,), (3.0,))
         expected = InferenceUsage(requests=6, input_tokens=14, output_tokens=4)
@@ -202,9 +202,7 @@ def test_unknown_token_counts_remain_unknown() -> None:
     async def scenario() -> None:
         class Unknown(Embedding):
             async def embed(self, texts: tuple[str, ...]) -> EmbeddingResult:
-                return EmbeddingResult(
-                    vectors=tuple((1.0,) for _ in texts), usage=InferenceUsage(requests=2)
-                )
+                return EmbeddingResult(vectors=tuple((1.0,) for _ in texts), usage=InferenceUsage(requests=2))
 
         result = await CoalescingEmbeddingModel(Unknown(), max_batch_size=1, coalesce_ms=0).embed(("a", "b"))
         assert result.usage == InferenceUsage(requests=4)
@@ -230,3 +228,29 @@ def test_unknown_token_counts_remain_unknown() -> None:
 def test_invalid_limits_fail_immediately(kwargs: dict[str, object]) -> None:
     with pytest.raises((TypeError, ValueError)):
         CoalescingEmbeddingModel(Embedding(), **kwargs)
+
+
+def test_asymmetric_query_embeddings_do_not_reuse_document_vectors() -> None:
+    async def scenario() -> None:
+        class Asymmetric(Embedding):
+            def __init__(self) -> None:
+                super().__init__()
+                self.query_calls: list[tuple[str, ...]] = []
+
+            async def embed_query(self, texts: tuple[str, ...]) -> EmbeddingResult:
+                self.query_calls.append(texts)
+                return EmbeddingResult(
+                    vectors=tuple((-1.0,) for _ in texts), usage=InferenceUsage(requests=2, input_tokens=11)
+                )
+
+        base = Asymmetric()
+        model = CoalescingEmbeddingModel(base, coalesce_ms=0)
+        assert (await model.embed(("same",))).vectors == ((4.0,),)
+        query = await embed_query(model, ("same",))
+        assert query.vectors == ((-1.0,),)
+        assert query.usage == InferenceUsage(requests=2, input_tokens=11)
+        assert (await model.embed(("same",))).usage.requests == 0
+        assert base.calls == [("same",)]
+        assert base.query_calls == [("same",)]
+
+    run(scenario())
