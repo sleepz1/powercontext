@@ -36,5 +36,10 @@ jobs:
           PYTHONPATH: src
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: competition/.venv/bin/python -m pytest -q -o addopts= --confcutdir=tests/builtin/inference tests/builtin/inference/test_coalescing.py
+      - name: Check changed Python code
+        run: |
+          uvx ruff check --no-fix src/powercontext/builtin/inference/coalescing.py tests/builtin/inference/test_coalescing.py
+          uvx ruff format --check src/powercontext/builtin/inference/coalescing.py tests/builtin/inference/test_coalescing.py
+          uvx ty check --python competition/.venv/bin/python src/powercontext/builtin/inference/coalescing.py
       - name: Preserve prior contest tasks
         run: make -C competition test-csv test-pi test-pdf test-rerank test-incremental test-count-trigger
