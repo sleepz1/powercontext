@@ -23,7 +23,7 @@ from dataclasses import dataclass
 from typing import TypeAlias
 
 from powercontext.builtin.inference.models import EmbeddingResult, EmbeddingVector, InferenceUsage
-from powercontext.builtin.inference.protocols import EmbeddingModel
+from powercontext.builtin.inference.protocols import EmbeddingModel, QueryEmbeddingModel
 
 
 @dataclass(frozen=True, eq=False, slots=True)
@@ -101,6 +101,19 @@ class CoalescingEmbeddingModel:
             vectors=tuple(vectors[text] for text in texts),
             usage=_sum_usage(receipts),
         )
+
+    async def embed_query(self, texts: tuple[str, ...], /) -> EmbeddingResult:
+        """Preserve asymmetric query providers without mixing their document cache.
+
+        Symmetric providers use the shared embed path, including its cache.
+        Providers with a separate query API retain their own query behavior and
+        usage; those vectors are never inserted into the document-vector cache.
+        """
+        if not texts:
+            return EmbeddingResult(vectors=())
+        if isinstance(self._model, QueryEmbeddingModel):
+            return await self._model.embed_query(texts)
+        return await self.embed(texts)
 
     def _flush(self) -> None:
         self._flush_handle = None

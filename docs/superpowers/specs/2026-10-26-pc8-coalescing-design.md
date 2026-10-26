@@ -12,6 +12,8 @@ Shield futures from caller cancellation. Provider failures fail only their batch
 
 Alternatives considered: a sequential global dispatcher would couple unrelated slow/failing requests; independent per-call batching would violate the cross-scope request budget. Shared text futures and independent batch tasks meet both cancellation isolation and budget constraints.
 
+Optional query API: symmetric models route queries through the shared embed/cache path. If the delegate exposes embed_query, delegate query vectors and usage directly without entering the document cache, preserving asymmetric-provider semantics.
+
 Deliverables: src/powercontext/builtin/inference/coalescing.py; focused regressions in tests/builtin/inference/test_coalescing.py; cloud workflow and this design/plan. No schema, dependency, existing API, official test, master/main, or existing submission branch changes.
 
 Acceptance: all official PC-8 tests, extra boundary regressions, frozen baseline ancestry, and prior CSV/Pi/PDF/rerank/incremental/count-trigger tests. Cloud test results establish self-test completion; official competition score remains pending platform evaluation.
