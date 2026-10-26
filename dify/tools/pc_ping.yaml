@@ -1,0 +1,27 @@
+identity:
+  name: pc_ping
+  author: sleepz1
+  label:
+    en_US: pc_ping
+    zh_Hans: pc_ping
+description:
+  human:
+    en_US: Report that the PowerContext Dify skeleton is loaded. No Server request is sent.
+    zh_Hans: 报告 PowerContext Dify 骨架已加载。不会向 Server 发送请求。
+  llm: Report that the PowerContext Dify plugin skeleton is loaded. This tool does not
+    read or write memory and does not contact PowerContext Server.
+parameters:
+  - name: note
+    type: string
+    required: false
+    form: llm
+    label:
+      en_US: note
+      zh_Hans: 备注
+    human_description:
+      en_US: Optional text echoed in the skeleton result.
+      zh_Hans: 可选文本，会原样出现在骨架结果中。
+    llm_description: Optional short note to echo. Do not include secrets.
+extra:
+  python:
+    source: tools/pc_ping.py

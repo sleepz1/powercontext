@@ -1,0 +1,46 @@
+identity:
+  author: sleepz1
+  name: powercontext
+  label:
+    en_US: PowerContext
+    zh_Hans: PowerContext
+  description:
+    en_US: Skeleton Dify tools for a separate PowerContext Server.
+    zh_Hans: 面向独立 PowerContext Server 的 Dify 工具骨架。
+  icon: icon.svg
+credentials_for_provider:
+  server_url:
+    type: text-input
+    required: true
+    label:
+      en_US: PowerContext Server URL
+      zh_Hans: PowerContext Server 地址
+    placeholder:
+      en_US: https://powercontext.example
+      zh_Hans: https://powercontext.example
+    help:
+      en_US: Stored for later tools. This skeleton does not connect to it.
+      zh_Hans: 供后续工具使用。当前骨架不会连接该地址。
+  api_token:
+    type: secret-input
+    required: true
+    label:
+      en_US: Server bearer token
+      zh_Hans: Server Bearer 凭证
+    help:
+      en_US: Stored for later tools. This skeleton does not send it.
+      zh_Hans: 供后续工具使用。当前骨架不会发送该凭证。
+  scope_id:
+    type: text-input
+    required: false
+    label:
+      en_US: Existing Scope ID
+      zh_Hans: 已创建的 Scope ID
+    help:
+      en_US: Optional shared Scope identifier. This skeleton does not resolve it.
+      zh_Hans: 可选的共享 Scope 标识。当前骨架不会解析它。
+tools:
+  - tools/pc_ping.yaml
+extra:
+  python:
+    source: provider/powercontext.py
