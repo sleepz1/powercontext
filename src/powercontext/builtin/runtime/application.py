@@ -2621,7 +2621,9 @@ class ScopedMemoryApplication:
                     if span is not None:
                         span.set_attributes({"powercontext.memory.flush.source_count": result.source_count})
                         span.set_outcome("success" if result.processed else "noop")
-                    return result
+                if self._runtime._record_service is not None:
+                    await self._runtime._record_service.admit_configured_source_counts(self.scope_id)
+                return result
 
     async def cursor(self) -> SourceCursor:
         async with self._runtime._context(self.scope_id) as context:

@@ -588,6 +588,8 @@ fields.
 | `ARTIFACT_PROCESSING_SUPERVISOR_MODE` | `artifact_processing_supervisor_mode` | `global`; only `global` and `dedicated` are valid |
 | `ARTIFACT_PROCESSING_ROLE` | `artifact_processing_role` | `all`; backend support is defined above |
 | `<ARTIFACT>_SCHEDULE_SECONDS` | `<artifact>_schedule_seconds` | Unset/None disables automatic admission; a configured value must be greater than 0 |
+| `MEMORY_SOURCE_COUNT_THRESHOLD` | `memory_source_count_threshold` | Unset/None keeps time-only Memory admission. A value must be a strict positive integer. Pending journal identities after the successful cursor admit one Memory window. The count condition and the time interval are OR. Explicit flush bypasses the count. After a successful window, the remaining count is judged again. |
+| `TOPIC_MEMORY_SOURCE_COUNT_THRESHOLD` | `topic_memory_source_count_threshold` | Same rule for Topic Memory. An accepted wave keeps its existing windows; the threshold is not applied again inside that wave. |
 | `<ARTIFACT>_SCHEDULE_ENABLED` | `<artifact>_schedule_enabled` | Explicit switch for cron-based artifacts; Profile is the first user |
 | `<ARTIFACT>_CRON` | `<artifact>_cron` | Five-field cron; must parse with a valid IANA timezone |
 | `<ARTIFACT>_TIMEZONE` | `<artifact>_timezone` | Cron timezone; Profile retains `Asia/Shanghai` by default |

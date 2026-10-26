@@ -39,6 +39,8 @@ def test_artifact_processing_configuration_defaults_match_the_rfc() -> None:
     runtime = RuntimeConfig()
 
     assert runtime.topic_memory_schedule_seconds is None
+    assert runtime.memory_source_count_threshold is None
+    assert runtime.topic_memory_source_count_threshold is None
     assert runtime.topic_memory_source_window_limit == 10
     assert runtime.topic_memory_history_max_candidates == 20
     assert runtime.topic_memory_history_rrf_threshold == 70
@@ -57,6 +59,11 @@ def test_artifact_processing_configuration_rejects_invalid_bounds() -> None:
         )
     with pytest.raises(ValidationError):
         RuntimeConfig(topic_memory_schedule_seconds=0)
+    for field in ("memory_source_count_threshold", "topic_memory_source_count_threshold"):
+        assert RuntimeConfig(**{field: 3}).model_dump()[field] == 3
+        for value in (True, False, 0, -1, 1.0, "3"):
+            with pytest.raises(ValidationError):
+                RuntimeConfig(**{field: value})
     with pytest.raises(ValidationError):
         RuntimeConfig(artifact_processing_worker_timeout_seconds=0)
     with pytest.raises(ValidationError):
