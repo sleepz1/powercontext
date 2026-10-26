@@ -1,0 +1,45 @@
+name: PC8 cloud acceptance
+
+on:
+  push:
+    branches: [codex/pc8-coalescing-embedding]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pc8-cloud
+  cancel-in-progress: true
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install locked official self-test environment
+        run: |
+          python3 -m pip install uv
+          make -C competition install
+      - name: Check frozen baseline
+        run: make -C competition check-baseline
+      - name: Official PC8 acceptance
+        run: make -C competition test-embedding
+      - name: Additional concurrency regressions
+        if: ${{ hashFiles('tests/builtin/inference/test_coalescing.py') != '' }}
+        env:
+          PYTHONPATH: src
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: competition/.venv/bin/python -m pytest -q -o addopts= --confcutdir=tests/builtin/inference tests/builtin/inference/test_coalescing.py
+      - name: Check changed Python code
+        run: |
+          uvx ruff check --no-fix src/powercontext/builtin/inference/coalescing.py tests/builtin/inference/test_coalescing.py
+          uvx ruff format --check --diff src/powercontext/builtin/inference/coalescing.py tests/builtin/inference/test_coalescing.py
+          uvx ty check --python competition/.venv/bin/python src/powercontext/builtin/inference/coalescing.py tests/builtin/inference/test_coalescing.py
+      - name: Preserve prior contest tasks
+        run: make -C competition test-csv test-pi test-pdf test-rerank test-incremental test-count-trigger

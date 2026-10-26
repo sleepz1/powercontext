@@ -547,6 +547,8 @@ class RelationalContexts:
         model_usage_queue_capacity: int = 256,
         model_usage_write_timeout_seconds: float = 1.0,
         model_usage_flush_timeout_seconds: float = 0.5,
+        memory_source_count_threshold: int | None = None,
+        topic_memory_source_count_threshold: int | None = None,
     ) -> None:
         self.database = database
         self.scopes = ScopeApplication(database, cursor_secret=cursor_secret)
@@ -664,6 +666,8 @@ class RelationalContexts:
             cursor_secret=cursor_secret,
             processing_pending=self.repositories.processing_pending,
             source_processing_bindings=(TOPIC_MEMORY_SOURCE_WINDOW_BINDING,),
+            memory_source_count_threshold=memory_source_count_threshold,
+            topic_memory_source_count_threshold=topic_memory_source_count_threshold,
             topic_memory_list_reader=TopicMemoryArtifactListReader(
                 database=database,
                 artifacts=artifact_repository,
