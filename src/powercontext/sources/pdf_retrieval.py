@@ -229,8 +229,13 @@ _GROWTH_INTENT = re.compile(r"\bgrowth\b", re.IGNORECASE)
 _FINANCIAL_INTENT = re.compile(r"financial", re.IGNORECASE)
 _DEBT_INTENT = re.compile(r"\bdebt\b", re.IGNORECASE)
 _ACQUISITION_INTENT = re.compile(r"\bacquisition|\bacquire", re.IGNORECASE)
+_DRIVER_INTENT = re.compile(
+    r"\b(?:drove|driven)\b.{0,48}\b(?:revenue|sales)\b|\b(?:revenue|sales)\b.{0,48}\b(?:drove|driven)\b",
+    re.IGNORECASE,
+)
 _SYNONYMS = {
     "battle": ("litigation", "lawsuit", "proceeding"),
+    "jnj": ("johnson",),
     "lawsuit": ("litigation", "proceeding"),
     "retain": ("retention",),
     "geograph": ("region",),
@@ -252,6 +257,8 @@ class _PageView:
     margin_note: bool
     growth_note: bool
     acquisition: float
+    amounts: int
+    revenue_driver: bool
     head_terms: frozenset[str]
 
 
@@ -269,11 +276,12 @@ def rank_page_texts(question: str, texts: Sequence[str], limit: int) -> tuple[in
 def _page_view(index: int, text: object) -> _PageView:
     body = text if isinstance(text, str) else ""
     low = body.lower()
+    amounts = len(_AMOUNTS.findall(body))
     return _PageView(
         index=index,
         low=low,
         terms=frozenset(_tokens(body)),
-        kinds=frozenset(_statement_kinds(body)),
+        kinds=frozenset(_statement_kinds(body, amounts)),
         legal=_legal_strength(low),
         segment=_segment_table(low, body),
         customer=_customer_signal(low),
@@ -282,19 +290,21 @@ def _page_view(index: int, text: object) -> _PageView:
         margin_note=_margin_note(low),
         growth_note=_growth_note(low),
         acquisition=_acquisition_note(low),
+        amounts=amounts,
+        revenue_driver=_revenue_driver(low),
         head_terms=frozenset(_tokens(body.split("\n", 1)[0])),
     )
 
 
 def _ordered_indexes(pages: Sequence[_PageView], question: str, limit: int) -> tuple[int, ...]:
     terms = _query_terms(question)
-    pages = _pages_for_document(pages, terms)
+    pages = _pages_for_document(pages, _anchor_terms(question, terms))
     idf, corpus_size = _idf(pages)
     intents = _intents(question)
     phrases = _phrase_words(question)
     scored = sorted(
         ((_score(page, terms, phrases, idf, corpus_size, intents), page) for page in pages),
-        key=lambda item: (-item[0], item[1].index),
+        key=lambda item: (-item[0], item[1].low),
     )
     pinned = _pinned(scored, intents)
     ordered = list(pinned)
@@ -305,6 +315,18 @@ def _ordered_indexes(pages: Sequence[_PageView], question: str, limit: int) -> t
         if len(ordered) >= limit:
             break
     return tuple(ordered[:limit])
+
+
+def _anchor_terms(question: str, terms: Sequence[str]) -> tuple[str, ...]:
+    """Add concatenated company names such as ``american`` + ``express``."""
+
+    raw = [
+        token
+        for token in _TOKEN.findall(question.lower())
+        if token not in _STOP and token not in _BOILER and len(token) > 1 and not token.isdigit()
+    ]
+    joined = [_stem("".join(raw[start : start + size])) for size in (2, 3, 4) for start in range(len(raw) - size + 1)]
+    return tuple(dict.fromkeys((*terms, *joined)))
 
 
 def _pages_for_document(pages: Sequence[_PageView], terms: Sequence[str]) -> Sequence[_PageView]:
@@ -334,14 +356,17 @@ def _pinned(scored: Sequence[tuple[float, _PageView]], intents: frozenset[str]) 
     for kind in ("income", "cash", "balance"):
         if kind not in intents:
             continue
-        matches = sorted(page.index for _, page in scored if kind in page.kinds)
-        for index in matches[:2]:
-            if index not in chosen:
-                chosen.append(index)
+        matches = sorted(
+            (page for _, page in scored if kind in page.kinds),
+            key=lambda page: (-page.amounts, page.low),
+        )
+        for page in matches[:2]:
+            if page.index not in chosen:
+                chosen.append(page.index)
     if "legal" in intents:
         legal_pages = sorted(
             (page for _, page in scored if page.legal > 0),
-            key=lambda page: (-page.legal, page.index),
+            key=lambda page: (-page.legal, page.low),
         )
         for page in legal_pages[:2]:
             if page.index not in chosen:
@@ -384,20 +409,21 @@ def _cue_score(page: _PageView, intents: frozenset[str]) -> float:
         score += min(page.legal, 12) * 0.8
     if "geo" in intents:
         score += 1.6 * page.regions
-    if "restruct" in intents and "restructuring" in page.low:
-        score += 4
-    if "segment" in intents and page.segment:
-        score += 9
     if "customer" in intents:
         score += page.customer
-    if "margin" in intents and page.margin_note:
-        score += 7
-    if "growth" in intents and page.growth_note:
-        score += 8
-    if "debt" in intents and page.debt:
-        score += 9
     if "acquire" in intents:
         score += page.acquisition
+    if "restruct" in intents and "restructuring" in page.low:
+        score += 4
+    for name, enabled, weight in (
+        ("segment", page.segment, 9),
+        ("margin", page.margin_note, 7),
+        ("growth", page.growth_note, 8),
+        ("debt", page.debt, 9),
+        ("driver", page.revenue_driver, 8),
+    ):
+        if name in intents and enabled:
+            score += weight
     return score
 
 
@@ -446,6 +472,7 @@ _INTENT_RULES: tuple[tuple[re.Pattern[str], tuple[str, ...]], ...] = (
     (_MARGIN_INTENT, ("margin",)),
     (_DEBT_INTENT, ("debt",)),
     (_ACQUISITION_INTENT, ("acquire",)),
+    (_DRIVER_INTENT, ("driver",)),
 )
 
 
@@ -498,8 +525,8 @@ def _matches(query_term: str, page_terms: frozenset[str]) -> bool:
     return False
 
 
-def _statement_kinds(text: str) -> set[str]:
-    if len(_AMOUNTS.findall(text)) < 12:
+def _statement_kinds(text: str, amounts: int) -> set[str]:
+    if amounts < 12:
         return set()
     head = _letters(text).removeprefix("tableofcontents")[:180]
     found: set[str] = set()
@@ -575,10 +602,20 @@ def _acquisition_note(low: str) -> float:
     return score
 
 
+def _revenue_driver(low: str) -> bool:
+    if "results of operations" not in low:
+        return False
+    if "net revenue" not in low and "net sales" not in low:
+        return False
+    return "driven" in low or "increase" in low or "decrease" in low
+
+
 def _customer_signal(low: str) -> float:
     score = 0.0
     if "customer accounted for" in low:
         score += 8
+    if "portion of our revenue" in low:
+        score += 7
     if _REVENUE_SHARE.search(low):
         score += 5
     if "major customer" in low:
