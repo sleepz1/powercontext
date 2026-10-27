@@ -1,0 +1,19 @@
+{
+  "request_id": "072fbf3694cd03236639095d808a9b3a",
+  "model": "MiniMax-M2.5",
+  "prompt_digest": "7510e8fe2c194159ad28c3f98979754192dd6f0ba55f0147fea76f0894652209",
+  "extracted_code": "\"\"\"Refund eligibility helper.\"\"\"\n\nfrom __future__ import annotations\n\nfrom typing import Mapping, Any\n\n\ndef is_refund_eligible(order: Mapping[str, Any]) -> bool:\n    \"\"\"Return True when the order may be refunded.\"\"\"\n    if order.get(\"status\") != \"PAID\":\n        return False\n\n    amount = order.get(\"amount\", 0)\n    if amount is None or amount <= 0:\n        return False\n\n    age_days = order.get(\"age_days\", 0)\n    if age_days is None or age_days > 7:\n        return False\n\n    return True\n",
+  "assistant_content": "<think>We need output only fenced complete file. Need interpret status uppercase enum. Spec says status comparison case-sensitive against uppercase enum values. Should require PAID? \"refundable only when...\" status likely need status == PAID, cancelled never. Existing doesn't check status, so lowercase paid should false likely. Implement status get maybe missing false. amount, age. age &lt;=7, nonnegative? Rule only age_days &lt;=7, but \"age_days\" presumably integer. Need avoid inventing. Status comparison exact PAID. CANCELLED rejection explicitly. Could status be other statuses? Rule enum values PAID CANCELLED REFUNDED, likely only PAID eligible. Spec says \"Orders with status CANCELLED never refundable\"; doesn't explicitly say only PAID, but refundable likely paid. \"Status comparison is case-sensitive against uppercase enum values: PAID, CANCELLED, REFUNDED.\" This indicates status should be checked, likely PAID only. Implement status == \"PAID\" perhaps. Tests only paid. Need complete.</think>\n\n```python:src/refund.py\n\"\"\"Refund eligibility helper.\"\"\"\n\nfrom __future__ import annotations\n\nfrom typing import Mapping, Any\n\n\ndef is_refund_eligible(order: Mapping[str, Any]) -> bool:\n    \"\"\"Return True when the order may be refunded.\"\"\"\n    if order.get(\"status\") != \"PAID\":\n        return False\n\n    amount = order.get(\"amount\", 0)\n    if amount is None or amount <= 0:\n        return False\n\n    age_days = order.get(\"age_days\", 0)\n    if age_days is None or age_days > 7:\n        return False\n\n    return True\n```",
+  "usage": {
+    "total_tokens": 1739,
+    "total_characters": 0,
+    "prompt_tokens": 1395,
+    "completion_tokens": 344,
+    "completion_tokens_details": {
+      "reasoning_tokens": 211
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    }
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "purpose": "latest_specs",
+    "sql_text": "\n        SELECT m.*\n        FROM materials m\n        INNER JOIN (\n          SELECT path, MAX(version) AS max_version\n          FROM materials\n          WHERE kind = 'spec'\n          GROUP BY path\n        ) t ON m.path = t.path AND m.version = t.max_version\n        WHERE m.kind = 'spec'\n        ORDER BY m.path\n        ",
+    "row_count": 1,
+    "created_at": "2026-10-27 19:34:13"
+  },
+  {
+    "id": 2,
+    "purpose": "assemble_context",
+    "sql_text": "SELECT id, kind, path, title, content, version, tags, updated_at FROM materials WHERE 1=1 AND kind IN (%s) ORDER BY kind, path, version | params=[\"code\"]",
+    "row_count": 1,
+    "created_at": "2026-10-27 19:34:13"
+  },
+  {
+    "id": 3,
+    "purpose": "assemble_context",
+    "sql_text": "SELECT id, kind, path, title, content, version, tags, updated_at FROM materials WHERE 1=1 AND kind IN (%s) ORDER BY kind, path, version | params=[\"test\"]",
+    "row_count": 2,
+    "created_at": "2026-10-27 19:34:13"
+  },
+  {
+    "id": 4,
+    "purpose": "assemble_context",
+    "sql_text": "SELECT id, kind, path, title, content, version, tags, updated_at FROM materials WHERE 1=1 AND kind IN (%s) ORDER BY kind, path, version | params=[\"task\"]",
+    "row_count": 1,
+    "created_at": "2026-10-27 19:34:13"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "changed": true,
+  "records": [
+    {
+      "artifact": {
+        "family": "atomic-memory",
+        "artifact_id": "art_73f5dc2b01d4478aaed0dadaedcc3e5d",
+        "revision": 1
+      },
+      "kind": "decision",
+      "text": "AE-02 task state: refund eligibility fix via MiniMax. request_id=072fbf3694cd03236639095d808a9b3a prompt_digest=7510e8fe2c194159ad28c3f98979754192dd6f0ba55f0147fea76f0894652209 after_tests_exit=0 spec_versions=['specs/refund_eligibility.md@v1'] next: reuse this state after module restart for context/prepare.",
+      "state": "active",
+      "state_version": 0,
+      "merged_into_id": null
+    }
+  ]
+}

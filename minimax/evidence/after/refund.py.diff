@@ -1,0 +1,36 @@
+--- /workspace/powercontext-ae05/minimax/evidence/before/sample/src/refund.py	2026-10-27 19:32:30.731024467 +0800
++++ /workspace/powercontext-ae05/minimax/sample/billing_refund/src/refund.py	2026-10-27 19:34:17.939564283 +0800
+@@ -1,4 +1,4 @@
+-"""Refund eligibility helper (intentionally incomplete for AE-02 demo)."""
++"""Refund eligibility helper."""
+ 
+ from __future__ import annotations
+ 
+@@ -6,23 +6,16 @@
+ 
+ 
+ def is_refund_eligible(order: Mapping[str, Any]) -> bool:
+-    """Return True when the order may be refunded.
++    """Return True when the order may be refunded."""
++    if order.get("status") != "PAID":
++        return False
+ 
+-    Current implementation is incomplete relative to
+-    specs/refund_eligibility.md (missing CANCELLED guard;
+-    exclusive age bound).
+-    """
+     amount = order.get("amount", 0)
+     if amount is None or amount <= 0:
+         return False
+ 
+     age_days = order.get("age_days", 0)
+-    if age_days is None:
+-        return False
+-
+-    # BUG: exclusive upper bound; day 7 should still be eligible.
+-    if age_days >= 7:
++    if age_days is None or age_days > 7:
+         return False
+ 
+-    # BUG: CANCELLED orders are not rejected here.
+     return True
