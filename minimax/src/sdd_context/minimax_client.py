@@ -20,6 +20,7 @@ class MiniMaxResult:
     raw_response: dict[str, Any]
     content: str
     extracted_code: str
+    request_payload: dict[str, Any]
 
 
 SYSTEM_PROMPT = """You are a careful software engineer performing Spec-Driven Development.
@@ -96,7 +97,7 @@ class MiniMaxClient:
             timeout=120,
         )
         if r.status_code >= 400:
-            raise RuntimeError(f"MiniMax HTTP {r.status_code}: {r.text[:800]}")
+            raise RuntimeError(f"MiniMax HTTP {r.status_code}; response body omitted to protect credentials")
         data = r.json()
         content = data["choices"][0]["message"]["content"]
         # Strip MiniMax thinking tags if present
@@ -108,8 +109,9 @@ class MiniMaxClient:
             model=str(data.get("model") or self.settings.minimax_model),
             prompt_digest=prompt_digest,
             raw_response=data,
-            content=content,
+            content=content_clean,
             extracted_code=code,
+            request_payload=payload,
         )
 
     def save_record(self, result: MiniMaxResult, out_dir: Path) -> Path:
@@ -122,11 +124,8 @@ class MiniMaxClient:
             "extracted_code": result.extracted_code,
             "assistant_content": result.content,
             "usage": result.raw_response.get("usage"),
+            "request_payload": result.request_payload,
         }
         path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
-        # Also store raw (without key)
-        raw_path = out_dir / f"minimax_{result.request_id or 'call'}_raw.json"
-        raw_path.write_text(
-            json.dumps(result.raw_response, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
+        # Retain the request and final answer; private reasoning is unnecessary.
         return path

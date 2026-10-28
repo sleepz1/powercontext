@@ -124,73 +124,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if out["changed"] else 1
 
     if args.cmd == "e2e":
-        report: dict = {"steps": []}
-
-        def step(name, fn):
-            print(f"==> {name}")
-            result = fn()
-            report["steps"].append({"name": name, "result": _summarize(result)})
-            return result
-
-        def _summarize(obj):
-            if isinstance(obj, dict):
-                slim = {}
-                for k, v in obj.items():
-                    if k in ("pack", "prepared") and isinstance(v, (str, dict)):
-                        if isinstance(v, str):
-                            slim[k] = v[:120] + "..."
-                        else:
-                            slim[k] = {
-                                "status": v.get("status"),
-                                "content_len": len(v.get("content") or ""),
-                            }
-                    else:
-                        slim[k] = v
-                return slim
-            return obj
-
-        step("init", pipe.init_all)
-        before = step("before-test", pipe.run_before_tests)
-        if not before.get("ok_as_before"):
-            print("FAIL: before tests unexpectedly passed")
-            return 2
-        ctx = step("import+context", lambda: pipe.import_and_context(spec_version="v1"))
-        fix = step("minimax-fix", lambda: pipe.call_minimax_and_apply(ctx["pack"]))
-        after = step("after-test", pipe.run_after_tests)
-        if not after.get("ok"):
-            print("FAIL: after tests did not pass")
-            print(after.get("stdout"))
-            return 3
-        summary = {
-            **fix,
-            "after_exit": after["exit_code"],
-            "spec_versions": ctx["meta"]["spec_versions"],
-        }
-        step("save-state", lambda: pipe.save_task_state(summary))
-        reused = step("reuse-state", pipe.reuse_after_restart)
-        content = (reused.get("prepared") or {}).get("content") or ""
-        if not content:
-            print("FAIL: PowerContext prepare returned empty after restart")
-            return 4
-        changed = step("spec-update", pipe.demonstrate_spec_change)
-        if not changed.get("changed"):
-            print("FAIL: context did not change after spec re-import")
-            return 5
-
-        report["criteria"] = {
-            "1_runnable": True,
-            "2_minimax_matches_diff": bool(fix.get("request_id")),
-            "3_context_sources_and_changes": bool(changed.get("changed")),
-            "4_db_queries_build_context": True,
-            "5_state_reuse_after_restart": bool(content),
-            "6_fail_then_pass": before.get("ok_as_before") and after.get("ok"),
-        }
-        out_path = pipe.evidence / "logs" / "e2e_report.json"
-        out_path.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
-        print(json.dumps(report["criteria"], indent=2))
-        print(f"report: {out_path}")
-        return 0 if all(report["criteria"].values()) else 6
-
+        from sdd_context.e2e import run
+        return run()
     parser.error(f"unknown cmd {args.cmd}")
     return 2
 

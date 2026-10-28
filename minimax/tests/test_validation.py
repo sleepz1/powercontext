@@ -40,3 +40,21 @@ def test_db_criteria_requires_all_material_queries():
     for kind in ("code", "test", "task"):
         rows.append({"purpose": "assemble_context", "sql_text": f'SELECT ... params=["{kind}"]', "row_count": 1})
     assert verify_query_log(rows)
+
+
+def test_historical_model_output_has_real_sample_red_green(tmp_path):
+    """Fresh executions of the delivered fixture, without claiming a new API call."""
+    import json
+    import shutil
+    from sdd_context.config import Settings
+    from sdd_context.runner import Pipeline
+
+    root = Path(__file__).resolve().parents[1]
+    sample = tmp_path / "sample"
+    shutil.copytree(root / "sample/billing_refund", sample)
+    shutil.copyfile(sample / "baseline/refund.py", sample / "src/refund.py")
+    pipe = Pipeline(Settings(sample_root=sample, evidence_root=tmp_path / "evidence"))
+    assert pipe.run_before_tests()["ok_as_before"]
+    record = json.loads((root / "evidence/minimax/minimax_072fbf3694cd03236639095d808a9b3a.json").read_text())
+    (sample / "src/refund.py").write_text(record["extracted_code"])
+    assert pipe.run_after_tests()["ok"]
