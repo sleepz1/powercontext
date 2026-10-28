@@ -182,6 +182,11 @@ class SourceLifecycleService:
         if prior is not None:
             if json.loads(prior["payload_json"]) != payload:
                 raise SourceLifecycleError("sequence-conflict")
+            # Identical replay must finish an interrupted native Memory sync without
+            # inserting a new event row. Successful replays stay revision-neutral
+            # because _sync_memory_state only writes when the entry state differs.
+            await self._set_available(event.node_id, event.available)
+            await self._propagate()
             return await self._active_ids()
         latest = await self._latest_sequence(event.node_id)
         if latest is not None and event.sequence <= latest:
