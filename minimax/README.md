@@ -4,7 +4,7 @@
 
 ## What this is
 
-A local CLI module that:
+A CLI module, validated on Linux cloud runners, that:
 
 1. Imports specs / code / tests into **seekdb**
 2. Assembles an SDD context pack from **SQL query results**
@@ -18,7 +18,7 @@ A local CLI module that:
 See [RUNBOOK.md](./RUNBOOK.md). One-shot:
 
 ```bash
-./scripts/run_e2e.sh
+bash scripts/run_e2e.sh
 ```
 
 ## Layout
@@ -36,3 +36,5 @@ minimax/
 
 - This directory's original code: Apache-2.0 aligned with the parent `powercontext` competition ecosystem branch.
 - PowerContext / seekdb / MiniMax are third-party services/SDKs; follow their respective licenses and terms. No vendor credentials are committed.
+
+This independent backup is tracked in [draft PR 11](https://github.com/sleepz1/powercontext/pull/11). Real seekdb and PowerContext validation and historical-output RED/GREEN have passed in cloud; a fresh MiniMax repair requires the runtime Actions secret `MINIMAX_API_KEY`. See [SELF_CHECK.md](./SELF_CHECK.md) for exact evidence and the remaining live-validation dependency.

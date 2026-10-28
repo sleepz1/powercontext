@@ -17,7 +17,7 @@ Fix `sample/billing_refund/src/refund.py` so refund eligibility matches `specs/r
 
 - seekdb database `ae02_minimax`, tables `materials`, `query_log`
 - Seeded by `python -m sdd_context.cli init` then `context` / `e2e`
-- PowerContext scope idempotency key: `ae02-minimax-sdd` (configurable)
+- PowerContext scope idempotency key: `ae02-minimax-sdd` (configurable); `e2e` appends a unique run identifier and records it in the report to prove an empty starting scope
 
 ## Steps
 
@@ -29,18 +29,20 @@ Fix `sample/billing_refund/src/refund.py` so refund eligibility matches `specs/r
 
 | Check | Expected |
 |---|---|
-| before-test | pytest exit ≠ 0 (new behavior missing; not env error) |
+| before-test | pytest exit 1; exactly the CANCELLED and inclusive-day-7 assertion failures, three passing regressions, no errors/skips |
 | MiniMax record | `evidence/minimax/minimax_<id>.json` extracted_code matches applied file / diff |
 | context pack | contains specs, `src/refund.py`, `test_refund.py`, `test_regression.py`, done/todo |
 | after spec-update | `evidence/logs/context_pack_change_summary.json` → `"changed": true` |
 | DB | `evidence/db/query_log.json` shows SELECT queries with row_count > 0 |
-| PowerContext | `remember.json` then `prepare_after_restart.json` with non-empty content |
+| PowerContext | `prepare_empty.json`, then `remember.json`; separate interpreter restores the same scope and its returned state appears in `context_pack_after_restart.txt` |
 | after-test | pytest exit 0; new + regression tests pass |
 
 ## Reset
 
 ```bash
 ./scripts/reset.sh
-# restores buggy refund.py, clears evidence runtime artifacts optional,
-# DELETE FROM materials via cli init
+# restores the committed buggy baseline without service/virtualenv requirements
+# cli init/e2e initializes database data separately
 ```
+
+Current cloud evidence lives in `evidence/cloud/eca8599/`; inherited root evidence is historical. The cloud services report explicitly distinguishes `services-only` (no new MiniMax call, live repair criteria remain false) from `live`. The contract test that replays historical MiniMax output is labeled as a fixture replay, while the live path calls the API and records the exact new request and response correspondence.

@@ -239,7 +239,8 @@ class Pipeline:
 
     def save_task_state(self, summary: dict[str, Any]) -> dict[str, Any]:
         text = (
-            "AE-02 task state: refund eligibility fix via MiniMax. "
+            "AE-02 task state: refund eligibility checkpoint. "
+            f"verification_mode={summary.get('verification_mode', 'unrecorded')} "
             f"request_id={summary.get('request_id')} "
             f"prompt_digest={summary.get('prompt_digest')} "
             f"after_tests_exit={summary.get('after_exit')} "
@@ -267,7 +268,8 @@ class Pipeline:
         if self.pc.scope_id is None:
             self.pc.ensure_scope()
         payload = {"url": self.settings.powercontext_url, "scope_key": self.settings.powercontext_scope_key}
-        proc = subprocess.run([sys.executable, "-m", "sdd_context.resume"], input=json.dumps(payload), capture_output=True, text=True, check=True)
+        child_env = {key: value for key, value in os.environ.items() if key not in ("MINIMAX_API_KEY", "MINIMAX_KEY_FILE")}
+        proc = subprocess.run([sys.executable, "-m", "sdd_context.resume"], input=json.dumps(payload), capture_output=True, text=True, check=True, env=child_env)
         restored = json.loads(proc.stdout)
         scope, prepared = restored["scope_id"], restored["prepared"]
         content = prepared.get("content") or ""

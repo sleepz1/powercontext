@@ -58,3 +58,29 @@ def test_historical_model_output_has_real_sample_red_green(tmp_path):
     record = json.loads((root / "evidence/minimax/minimax_072fbf3694cd03236639095d808a9b3a.json").read_text())
     (sample / "src/refund.py").write_text(record["extracted_code"])
     assert pipe.run_after_tests()["ok"]
+
+
+def test_model_record_preserves_actual_request_without_key_or_reasoning(monkeypatch, tmp_path):
+    import json
+    from sdd_context.config import Settings
+    from sdd_context.minimax_client import MiniMaxClient
+
+    monkeypatch.setenv("MINIMAX_API_KEY", "unit-test-placeholder")
+    captured = {}
+    class Response:
+        status_code = 200
+        def json(self):
+            return {"id": "test-request", "model": "MiniMax-M2.5", "choices": [{"message": {"content": "<think>private reasoning</think>```python:src/refund.py\nanswer = 1\n```"}}]}
+    def post(url, **kwargs):
+        captured.update(kwargs)
+        return Response()
+    monkeypatch.setattr("sdd_context.minimax_client.requests.post", post)
+    client = MiniMaxClient(Settings())
+    result = client.edit_code(context_pack="database context", target_path="src/refund.py", current_source="answer = 0\n")
+    path = client.save_record(result, tmp_path)
+    serialized = path.read_text()
+    saved = json.loads(serialized)
+    assert saved["request_payload"] == captured["json"]
+    assert "database context" in saved["request_payload"]["messages"][1]["content"]
+    assert "unit-test-placeholder" not in serialized
+    assert "private reasoning" not in serialized

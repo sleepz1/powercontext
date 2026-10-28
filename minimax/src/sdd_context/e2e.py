@@ -46,6 +46,7 @@ def run(*, services_only=False):
             require(baseline_tests == current_tests, "Target or regression tests changed during repair")
             fix.update(after_exit=after["exit_code"], spec_versions=ctx["meta"]["spec_versions"])
             report["criteria"]["6"] = True
+        fix["verification_mode"] = report["mode"]
         step("save-state", lambda: pipe.save_task_state(fix))
         restored = step("reuse-state", pipe.reuse_after_restart)
         require(restored["child_pid"] != restored["parent_pid"] and restored["used_in_context"], "Saved state was not used after interpreter restart")

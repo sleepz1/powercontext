@@ -60,12 +60,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if out["ok_as_before"] else 1
 
     if args.cmd == "fix":
-        pack_path = pipe.evidence / "logs" / "context_pack_v1.txt"
-        if not pack_path.exists():
-            out = pipe.import_and_context(spec_version="v1")
-            pack = out["pack"]
-        else:
-            pack = pack_path.read_text(encoding="utf-8")
+        # Never treat inherited or stale evidence as this invocation's SQL result.
+        pipe.db.init_schema()
+        pack = pipe.import_and_context(spec_version="v1")["pack"]
         result = pipe.call_minimax_and_apply(pack)
         print(json.dumps(result, indent=2))
         # stash for save-state

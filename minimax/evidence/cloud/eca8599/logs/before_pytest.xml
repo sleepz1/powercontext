@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="5" time="0.050" timestamp="2026-10-28T12:18:10.210735+00:00" hostname="runnervm48cm3"><testcase classname="sample.billing_refund.tests.test_refund" name="test_cancelled_never_refundable" time="0.000"><failure message="AssertionError: assert True is False&#10; +  where True = is_refund_eligible({'status': 'CANCELLED', 'age_days': 1, 'amount': 50})">def test_cancelled_never_refundable():
+&gt;       assert is_refund_eligible(
+            {"status": "CANCELLED", "age_days": 1, "amount": 50}
+        ) is False
+E       AssertionError: assert True is False
+E        +  where True = is_refund_eligible({'status': 'CANCELLED', 'age_days': 1, 'amount': 50})
+
+tests/test_refund.py:15: AssertionError</failure></testcase><testcase classname="sample.billing_refund.tests.test_refund" name="test_day_seven_inclusive" time="0.000"><failure message="AssertionError: assert False is True&#10; +  where False = is_refund_eligible({'status': 'PAID', 'age_days': 7, 'amount': 50})">def test_day_seven_inclusive():
+&gt;       assert is_refund_eligible(
+            {"status": "PAID", "age_days": 7, "amount": 50}
+        ) is True
+E       AssertionError: assert False is True
+E        +  where False = is_refund_eligible({'status': 'PAID', 'age_days': 7, 'amount': 50})
+
+tests/test_refund.py:21: AssertionError</failure></testcase><testcase classname="sample.billing_refund.tests.test_regression" name="test_fresh_paid_order_refundable" time="0.000" /><testcase classname="sample.billing_refund.tests.test_regression" name="test_too_old_not_refundable" time="0.000" /><testcase classname="sample.billing_refund.tests.test_regression" name="test_zero_amount_not_refundable" time="0.000" /></testsuite></testsuites>
