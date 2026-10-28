@@ -1,0 +1,35 @@
+command: /workspace/powercontext-ae05/minimax/.venv/bin/python -m pytest -q tests
+cwd: /workspace/powercontext-ae05/minimax/sample/billing_refund
+exit_code: 1
+timestamp: 2026-10-27T19:34:13+08:00
+
+--- stdout ---
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_cancelled_never_refundable ________________________
+
+    def test_cancelled_never_refundable():
+>       assert is_refund_eligible(
+            {"status": "CANCELLED", "age_days": 1, "amount": 50}
+        ) is False
+E       AssertionError: assert True is False
+E        +  where True = is_refund_eligible({'status': 'CANCELLED', 'age_days': 1, 'amount': 50})
+
+tests/test_refund.py:15: AssertionError
+___________________________ test_day_seven_inclusive ___________________________
+
+    def test_day_seven_inclusive():
+>       assert is_refund_eligible(
+            {"status": "PAID", "age_days": 7, "amount": 50}
+        ) is True
+E       AssertionError: assert False is True
+E        +  where False = is_refund_eligible({'status': 'PAID', 'age_days': 7, 'amount': 50})
+
+tests/test_refund.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_refund.py::test_cancelled_never_refundable - AssertionError...
+FAILED tests/test_refund.py::test_day_seven_inclusive - AssertionError: asser...
+2 failed, 3 passed in 0.01s
+
+--- stderr ---
+

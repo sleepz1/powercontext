@@ -1,0 +1,17 @@
+[project]
+name = "ae02-minimax-sdd"
+version = "0.1.0"
+description = "OceanBase 6th contest AE-02 MiniMax SDD context module"
+requires-python = ">=3.11"
+dependencies = [
+  "pymysql>=1.1.0",
+  "requests>=2.31.0",
+  "pytest>=8.0.0",
+  "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+sdd-context = "sdd_context.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["sample/billing_refund/tests"]

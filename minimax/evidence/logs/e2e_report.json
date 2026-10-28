@@ -1,0 +1,146 @@
+{
+  "steps": [
+    {
+      "name": "init",
+      "result": {
+        "db": "ready",
+        "powercontext": {
+          "live": {
+            "status": "ok"
+          },
+          "ready": {
+            "status": "ready",
+            "checks": {
+              "runtime": "ready",
+              "database": "ready",
+              "artifact_processing_supervisor": "disabled",
+              "access_mode": "disabled",
+              "authentication_provider": "disabled",
+              "access_provider": "disabled",
+              "access_resource_kinds": "server,scope,artifact",
+              "access_artifact_families": "atomic-memory:enabled,experience:enabled,handoff:enabled,memory:enabled,profile:enabled,prompt:enabled,skill:enabled"
+            }
+          }
+        },
+        "scope_id": "scp_2nd1n4v2bvs70vcv95savvrh6c"
+      }
+    },
+    {
+      "name": "before-test",
+      "result": {
+        "exit_code": 1,
+        "stdout": "FF...                                                                    [100%]\n=================================== FAILURES ===================================\n_______________________ test_cancelled_never_refundable ________________________\n\n    def test_cancelled_never_refundable():\n>       assert is_refund_eligible(\n            {\"status\": \"CANCELLED\", \"age_days\": 1, \"amount\": 50}\n        ) is False\nE       AssertionError: assert True is False\nE        +  where True = is_refund_eligible({'status': 'CANCELLED', 'age_days': 1, 'amount': 50})\n\ntests/test_refund.py:15: AssertionError\n___________________________ test_day_seven_inclusive ___________________________\n\n    def test_day_seven_inclusive():\n>       assert is_refund_eligible(\n            {\"status\": \"PAID\", \"age_days\": 7, \"amount\": 50}\n        ) is True\nE       AssertionError: assert False is True\nE        +  where False = is_refund_eligible({'status': 'PAID', 'age_days': 7, 'amount': 50})\n\ntests/test_refund.py:21: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_refund.py::test_cancelled_never_refundable - AssertionError...\nFAILED tests/test_refund.py::test_day_seven_inclusive - AssertionError: asser...\n2 failed, 3 passed in 0.01s\n",
+        "log": "/workspace/powercontext-ae05/minimax/evidence/logs/before_pytest.txt",
+        "expect_fail": true,
+        "ok_as_before": true
+      }
+    },
+    {
+      "name": "import+context",
+      "result": {
+        "pack_path": "/workspace/powercontext-ae05/minimax/evidence/logs/context_pack_v1.txt",
+        "meta": {
+          "spec_count": 1,
+          "code_count": 1,
+          "test_count": 2,
+          "spec_versions": [
+            "specs/refund_eligibility.md@v1"
+          ],
+          "spec_titles": [
+            "Refund Eligibility v1"
+          ],
+          "digest_preview": "# SDD Context Pack\n\n## applicable_specs\n### Refund Eligibility v1 [specs/refund_eligibility.md @ v1]\n# Spec: Refund Eligibility (v1)\n\n## Goal\nDecide whether a completed order may receive a refund.\n\n##"
+        },
+        "pack": "# SDD Context Pack\n\n## applicable_specs\n### Refund Eligibility v1 [specs/refund_eligibility.md @ v1]\n# Spec: Refund Elig..."
+      }
+    },
+    {
+      "name": "minimax-fix",
+      "result": {
+        "request_id": "072fbf3694cd03236639095d808a9b3a",
+        "model": "MiniMax-M2.5",
+        "prompt_digest": "7510e8fe2c194159ad28c3f98979754192dd6f0ba55f0147fea76f0894652209",
+        "record": "/workspace/powercontext-ae05/minimax/evidence/minimax/minimax_072fbf3694cd03236639095d808a9b3a.json",
+        "diff": "/workspace/powercontext-ae05/minimax/evidence/after/refund.py.diff",
+        "code_len": 491
+      }
+    },
+    {
+      "name": "after-test",
+      "result": {
+        "exit_code": 0,
+        "stdout": ".....                                                                    [100%]\n5 passed in 0.01s\n",
+        "log": "/workspace/powercontext-ae05/minimax/evidence/logs/after_pytest.txt",
+        "ok": true
+      }
+    },
+    {
+      "name": "save-state",
+      "result": {
+        "changed": true,
+        "records": [
+          {
+            "artifact": {
+              "family": "atomic-memory",
+              "artifact_id": "art_73f5dc2b01d4478aaed0dadaedcc3e5d",
+              "revision": 1
+            },
+            "kind": "decision",
+            "text": "AE-02 task state: refund eligibility fix via MiniMax. request_id=072fbf3694cd03236639095d808a9b3a prompt_digest=7510e8fe2c194159ad28c3f98979754192dd6f0ba55f0147fea76f0894652209 after_tests_exit=0 spec_versions=['specs/refund_eligibility.md@v1'] next: reuse this state after module restart for context/prepare.",
+            "state": "active",
+            "state_version": 0,
+            "merged_into_id": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "reuse-state",
+      "result": {
+        "scope_id": "scp_2nd1n4v2bvs70vcv95savvrh6c",
+        "prepared": {
+          "status": "ready",
+          "content_len": 850
+        }
+      }
+    },
+    {
+      "name": "spec-update",
+      "result": {
+        "changed": true,
+        "before_meta": {
+          "spec_count": 1,
+          "code_count": 1,
+          "test_count": 2,
+          "spec_versions": [
+            "specs/refund_eligibility.md@v1"
+          ],
+          "spec_titles": [
+            "Refund Eligibility v1"
+          ],
+          "digest_preview": "# SDD Context Pack\n\n## applicable_specs\n### Refund Eligibility v1 [specs/refund_eligibility.md @ v1]\n# Spec: Refund Eligibility (v1)\n\n## Goal\nDecide whether a completed order may receive a refund.\n\n##"
+        },
+        "after_meta": {
+          "spec_count": 1,
+          "code_count": 1,
+          "test_count": 2,
+          "spec_versions": [
+            "specs/refund_eligibility.md@v2"
+          ],
+          "spec_titles": [
+            "Refund Eligibility v2"
+          ],
+          "digest_preview": "# SDD Context Pack\n\n## applicable_specs\n### Refund Eligibility v2 [specs/refund_eligibility.md @ v2]\n# Spec: Refund Eligibility (v2 \u2014 updated)\n\n## Goal\nDecide whether a completed order may receive a r"
+        }
+      }
+    }
+  ],
+  "criteria": {
+    "1_runnable": true,
+    "2_minimax_matches_diff": true,
+    "3_context_sources_and_changes": true,
+    "4_db_queries_build_context": true,
+    "5_state_reuse_after_restart": true,
+    "6_fail_then_pass": true
+  }
+}

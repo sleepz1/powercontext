@@ -1,0 +1,12 @@
+command: /workspace/powercontext-ae05/minimax/.venv/bin/python -m pytest -q tests
+cwd: /workspace/powercontext-ae05/minimax/sample/billing_refund
+exit_code: 0
+timestamp: 2026-10-27T19:34:18+08:00
+pytest_version: pytest 9.1.1
+
+--- stdout ---
+.....                                                                    [100%]
+5 passed in 0.01s
+
+--- stderr ---
+

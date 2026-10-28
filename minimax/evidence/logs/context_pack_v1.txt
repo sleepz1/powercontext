@@ -1,0 +1,125 @@
+# SDD Context Pack
+
+## applicable_specs
+### Refund Eligibility v1 [specs/refund_eligibility.md @ v1]
+# Spec: Refund Eligibility (v1)
+
+## Goal
+Decide whether a completed order may receive a refund.
+
+## Rules
+1. Orders with `status == "CANCELLED"` are **never** refundable.
+2. An order is refundable only when `age_days <= 7` (day 7 is **inclusive**).
+3. An order with `amount <= 0` is never refundable.
+4. Status comparison is case-sensitive against uppercase enum values: `PAID`, `CANCELLED`, `REFUNDED`.
+
+## Non-goals
+- Currency conversion
+- Partial refunds
+- Timezone conversion (callers pass integer `age_days`)
+
+## Acceptance tests
+- CANCELLED + age_days=1 → False
+- PAID + age_days=7 → True
+- PAID + age_days=8 → False
+- PAID + age_days=0 + amount=10 → True
+- PAID + amount=0 → False
+
+## files_to_change
+### src/refund.py
+```python
+"""Refund eligibility helper (intentionally incomplete for AE-02 demo)."""
+
+from __future__ import annotations
+
+from typing import Mapping, Any
+
+
+def is_refund_eligible(order: Mapping[str, Any]) -> bool:
+    """Return True when the order may be refunded.
+
+    Current implementation is incomplete relative to
+    specs/refund_eligibility.md (missing CANCELLED guard;
+    exclusive age bound).
+    """
+    amount = order.get("amount", 0)
+    if amount is None or amount <= 0:
+        return False
+
+    age_days = order.get("age_days", 0)
+    if age_days is None:
+        return False
+
+    # BUG: exclusive upper bound; day 7 should still be eligible.
+    if age_days >= 7:
+        return False
+
+    # BUG: CANCELLED orders are not rejected here.
+    return True
+```
+
+## tests_for_change
+### tests/test_refund.py
+```python
+"""New behavior required by specs/refund_eligibility.md."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from refund import is_refund_eligible  # noqa: E402
+
+
+def test_cancelled_never_refundable():
+    assert is_refund_eligible(
+        {"status": "CANCELLED", "age_days": 1, "amount": 50}
+    ) is False
+
+
+def test_day_seven_inclusive():
+    assert is_refund_eligible(
+        {"status": "PAID", "age_days": 7, "amount": 50}
+    ) is True
+```
+
+## compat_tests
+### tests/test_regression.py
+```python
+"""Regression coverage that must stay green after the fix."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from refund import is_refund_eligible  # noqa: E402
+
+
+def test_fresh_paid_order_refundable():
+    assert is_refund_eligible(
+        {"status": "PAID", "age_days": 0, "amount": 10}
+    ) is True
+
+
+def test_too_old_not_refundable():
+    assert is_refund_eligible(
+        {"status": "PAID", "age_days": 8, "amount": 10}
+    ) is False
+
+
+def test_zero_amount_not_refundable():
+    assert is_refund_eligible(
+        {"status": "PAID", "age_days": 1, "amount": 0}
+    ) is False
+```
+
+## done_todo_prior
+- (task) AE-02 fix refund eligibility: Implement CANCELLED rejection and inclusive age_days<=7 per applicable specs. Keep regression tests green.
+- prior_verification: none yet
