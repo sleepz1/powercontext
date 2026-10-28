@@ -1,0 +1,318 @@
+{
+  "startedAt": "2026-10-28T14:12:33.645Z",
+  "base": "http://127.0.0.1:8788",
+  "steps": [],
+  "checks": [
+    {
+      "name": "health.reports-seekdb",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "backend": "seekdb",
+        "label": "seekdb 1.4.0 · 库内 ngram 全文检索",
+        "today": "2026-10-28"
+      }
+    },
+    {
+      "name": "import.实验复现清单.md",
+      "pass": true,
+      "detail": {
+        "chunks": 2,
+        "created": 0,
+        "skipped": 2,
+        "revision": 2
+      }
+    },
+    {
+      "name": "import.论文阅读方法.md",
+      "pass": true,
+      "detail": {
+        "chunks": 1,
+        "created": 0,
+        "skipped": 1,
+        "revision": 1
+      }
+    },
+    {
+      "name": "import.组会纪要-2026-04.md",
+      "pass": true,
+      "detail": {
+        "chunks": 1,
+        "created": 0,
+        "skipped": 1,
+        "revision": 1
+      }
+    },
+    {
+      "name": "import.seekdb-检索要点.txt",
+      "pass": true,
+      "detail": {
+        "chunks": 1,
+        "created": 0,
+        "skipped": 1,
+        "revision": 1
+      }
+    },
+    {
+      "name": "import.开题报告-片段.md",
+      "pass": true,
+      "detail": {
+        "chunks": 1,
+        "created": 0,
+        "skipped": 1,
+        "revision": 1
+      }
+    },
+    {
+      "name": "import.idempotent-reimport",
+      "pass": true,
+      "detail": {
+        "created": 0,
+        "skipped": 2,
+        "retired": 0,
+        "revision": 2
+      }
+    },
+    {
+      "name": "search.returns-ranked-hits",
+      "pass": true,
+      "detail": {
+        "retrieval": "database-fulltext-ranked",
+        "terms": [
+          "怎样保证",
+          "样保",
+          "保证",
+          "证实",
+          "实验",
+          "验可",
+          "以复",
+          "复现"
+        ],
+        "tookMs": 7,
+        "top": {
+          "source": "实验复现清单.md",
+          "chunk": 0,
+          "dbScore": 4.105432023700454,
+          "provenance": "实验复现清单.md · 第 1 块 · 版本 2"
+        }
+      }
+    },
+    {
+      "name": "search.hit-has-provenance",
+      "pass": true,
+      "detail": {
+        "provenance": "实验复现清单.md · 第 1 块 · 版本 2",
+        "excerpt": "# 实验复现清单\n\n## 一、环境与依赖\n复现实验前必须固定依赖版本：提交锁文件，记录 Python / CUDA / "
+      }
+    },
+    {
+      "name": "search.workspace-isolation",
+      "pass": true,
+      "detail": {
+        "hitsInOtherWorkspace": 0
+      }
+    },
+    {
+      "name": "action.create-with-provenance",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "action": {
+          "id": "cde281333beb3acf59f932cd5d53060cebe4f6f02ef4171da6db3ef27b347a91",
+          "workspaceId": "verify",
+          "title": "补齐实验依赖版本并输出锁文件",
+          "ownerName": "陈同学",
+          "dueDate": "2026-10-31",
+          "status": "open",
+          "refChunkId": "012181ab31ef665e1e7a339a235249bf16fbbc6e8b6fe24b7927c155c6130660",
+          "refSourceName": "实验复现清单.md",
+          "refChunkNo": 0,
+          "refChunkRevision": 2,
+          "createdAt": "2026-10-28T14:12:33.747Z",
+          "updatedAt": "2026-10-28T14:12:33.747Z",
+          "completedAt": null
+        }
+      }
+    },
+    {
+      "name": "action.idempotent-retry",
+      "pass": true,
+      "detail": {
+        "status": 201,
+        "sameId": true
+      }
+    },
+    {
+      "name": "action.complete",
+      "pass": true,
+      "detail": {
+        "status": "done",
+        "completedAt": "2026-10-28"
+      }
+    },
+    {
+      "name": "report.contains-completed-action",
+      "pass": true,
+      "detail": {
+        "range": {
+          "start": "2026-10-26",
+          "end": "2026-11-01",
+          "nextStart": "2026-11-02",
+          "nextEnd": "2026-11-08"
+        },
+        "excerpt": "# 研途周报（2026-10-26 ~ 2026-11-01）\n\n本周整理由模板规则生成，出处指向已入库资料分块。\n\n## 本周完成\n- 补齐实验依赖版本并输出锁文件｜陈同学｜已完成（截止 2026-10-31）｜出处：实验复现清单.md · 第 1 块 · 版本 2\n- 补齐实验依赖版本并输出锁文件｜陈同学｜已完成（截止 2026-10-31）｜出处：实验复现清单.md · 第 1 块 · 版本 2\n- 补齐实验依赖版本并输出锁文件｜陈同学｜已完成（截止 2026-10-31）｜出处：实验复现清单.md · 第 1 块 · 版本 2\n- 补齐实验依赖版本并输出锁文件｜陈同学｜已完成（截止 2"
+      }
+    },
+    {
+      "name": "report.declares-template-rule",
+      "pass": true,
+      "detail": {
+        "rule": "template",
+        "completed": 5,
+        "pending": 0
+      }
+    },
+    {
+      "name": "state.persisted-in-seekdb",
+      "pass": true,
+      "detail": {
+        "sources": 5,
+        "chunks": 6,
+        "actions": 5,
+        "openActions": 0
+      }
+    },
+    {
+      "name": "search.empty-query-rejected",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "error": "empty_query",
+        "message": "请输入检索问题。"
+      }
+    },
+    {
+      "name": "route.unknown-404",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "error": "not_found",
+        "message": "接口不存在。"
+      }
+    },
+    {
+      "name": "import.long-material-all-chunks",
+      "pass": true,
+      "detail": {
+        "characters": 182429,
+        "storedChunks": 415,
+        "expectedChunks": 415
+      }
+    },
+    {
+      "name": "import.over-length-rejected",
+      "pass": true,
+      "detail": {
+        "characters": 200010,
+        "status": 400,
+        "error": "material_too_large",
+        "message": "单份资料最长 200000 个字符。"
+      }
+    },
+    {
+      "name": "import.long-material-tail-searchable",
+      "pass": true,
+      "detail": {
+        "hits": 1,
+        "chunkNo": 414,
+        "expectedLastChunkNo": 414
+      }
+    },
+    {
+      "name": "version.first-revision",
+      "pass": true,
+      "detail": {
+        "revision": 1,
+        "created": 1,
+        "retired": 0
+      }
+    },
+    {
+      "name": "version.first-generation-read",
+      "pass": true,
+      "detail": {
+        "chunkCount": 1,
+        "chunkIds": [
+          "3bf0d30d"
+        ]
+      }
+    },
+    {
+      "name": "version.bump-retires-previous-chunks",
+      "pass": true,
+      "detail": {
+        "revision": 2,
+        "created": 1,
+        "retired": 1,
+        "chunkCount": 1
+      }
+    },
+    {
+      "name": "version.retired-content-not-searchable",
+      "pass": true,
+      "detail": {
+        "hits": 1,
+        "returned": [
+          "组会纪要-版本策略.md · 第 1 块 · 版本 2"
+        ]
+      }
+    },
+    {
+      "name": "version.current-content-searchable",
+      "pass": true,
+      "detail": {
+        "hits": 1,
+        "topProvenance": "组会纪要-版本策略.md · 第 1 块 · 版本 2"
+      }
+    },
+    {
+      "name": "version.active-generation-unique",
+      "pass": true,
+      "detail": {
+        "active": [
+          {
+            "no": 0,
+            "revision": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "version.historical-citation-still-resolves",
+      "pass": true,
+      "detail": {
+        "status": 201,
+        "revision": 1,
+        "source": "组会纪要-版本策略.md",
+        "chunkNo": 0
+      }
+    },
+    {
+      "name": "version.source-row-current-revision",
+      "pass": true,
+      "detail": {
+        "sourceRevision": 2,
+        "activeChunks": 1
+      }
+    },
+    {
+      "name": "version.report-quotes-locked-revision",
+      "pass": true,
+      "detail": {
+        "excerpt": "- 按第一版纪要核对负责人变更｜李同学｜待开始（截止 2026-10-30）｜出处：组会纪要-版本策略.md · 第 1 块 · 版本 1"
+      }
+    }
+  ],
+  "finishedAt": "2026-10-28T14:12:33.885Z",
+  "allPassed": true
+}

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="研途 ResearchLoop：带出处的资料检索、行动项与周报工作台。资料与任务存放在真实 seekdb 数据库，中文检索由数据库内 ngram 全文索引完成。本页为 2026 OceanBase × Qoder 生态赛 03 题作品介绍与验收入口。"
+    />
+    <title>研途 ResearchLoop · 作品介绍与验收入口 | 2026 OceanBase × Qoder 生态赛 03</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-row">
+        <div>
+          <p class="eyebrow">2026 OceanBase × Qoder 生态挑战赛 · 03 学习科研提效</p>
+          <h1>研途 ResearchLoop</h1>
+          <p class="lede">把「带出处的资料检索」和「带负责人与截止日期的行动项」放进同一个工作台，周报直接读同一张任务表。</p>
+        </div>
+        <nav class="toc" aria-label="页面导航">
+          <a href="#problem">问题</a>
+          <a href="#features">功能</a>
+          <a href="#architecture">架构</a>
+          <a href="#results">真实结果</a>
+          <a href="#shots">界面截图</a>
+          <a href="#run">本地运行</a>
+          <a href="#log">开发记录</a>
+          <a href="#limits">边界说明</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="strip" aria-label="关键指标">
+        <div>
+          <p class="figure">30 / 30</p>
+          <p class="figure-label">端到端断言全部通过（真实 seekdb）</p>
+        </div>
+        <div>
+          <p class="figure">1 条 SQL</p>
+          <p class="figure-label">MATCH … AGAINST 在库内过滤并排序中文检索</p>
+        </div>
+        <div>
+          <p class="figure">415 块</p>
+          <p class="figure-label">182,429 字符长资料完整入库，尾部仍可检索</p>
+        </div>
+        <div>
+          <p class="figure">版本锁定</p>
+          <p class="figure-label">同名资料改版后，历史出处仍可解析</p>
+        </div>
+      </section>
+
+      <section id="problem">
+        <h2>要解决的问题</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>资料分散，结论查不到出处</h3>
+            <p>论文摘录、实验记录、组会纪要散落在不同文件里。搜到一句话却无法回答「这句话来自哪份资料的第几段」，两周后就无法回查。</p>
+          </article>
+          <article class="card">
+            <h3>任务与资料断链</h3>
+            <p>行动项记在待办里、依据记在笔记里。任务完成后想说明「当时依据是什么」，只能重新翻文件。</p>
+          </article>
+          <article class="card">
+            <h3>周报靠人工再拼一遍</h3>
+            <p>本周做了什么、还欠什么、下周做什么，全都要从纪要和待办里手动整理，条目还常常丢掉出处。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="features">
+        <h2>核心功能</h2>
+        <ol class="flow">
+          <li>
+            <span class="step">1</span>
+            <div>
+              <h3>导入资料并保留出处</h3>
+              <p>粘贴或选择 Markdown / TXT，按 500 字符窗口、60 字符重叠分块。出处三元组是「文件名 · 第 N 块 · 版本 R」。资料名与分块序号进入数据库，回看时能取到原文。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step">2</span>
+            <div>
+              <h3>带出处的真实检索</h3>
+              <p>输入一句自然语言问题，中文按二元切分生成检索词交给数据库，由 <code>MATCH(content) AGAINST(?)</code> 在 seekdb 内完成过滤与相关度排序。页面只显示数据库返回的原文片段与出处，不生成任何没有出处的结论。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step">3</span>
+            <div>
+              <h3>从出处新建行动项</h3>
+              <p>任一条命中结果都能作为出处创建任务：标题、负责人、截止日期、状态。行动项记住分块标识与当时的版本号，同一幂等键重复提交返回同一条记录。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step">4</span>
+            <div>
+              <h3>生成可复制周报</h3>
+              <p>按「本周完成 / 待解决问题 / 下周计划」三段整理，条目自带出处与逾期标记，纯文本可一键复制。周报按模板规则生成并在正文注明，不冒充 AI 生成内容。</p>
+            </div>
+          </li>
+        </ol>
+        <div class="note">
+          界面为中文主界面，包含空态提示（还没有资料 / 没有符合条件的行动项）、失败提示与重试入口
+          （后端不可用时明确说明「不会用示例结果替代真实检索」），并在窄屏下重排为单列布局。
+        </div>
+      </section>
+
+      <section id="architecture">
+        <h2>技术架构</h2>
+        <div class="arch">
+          <div class="arch-box">
+            <p class="arch-title">React 前端（中文工作台）</p>
+            <p>Vite + React 19 + Tailwind 4。四个标签页：资料检索 / 资料库 / 行动项 / 周报，另有「关于本站」说明实现与验收步骤。只调用一组同源 <code>/api/*</code> 接口。</p>
+          </div>
+          <div class="arch-arrow">↓ HTTP JSON</div>
+          <div class="arch-box">
+            <p class="arch-title">Node 核心服务</p>
+            <p><code>server/index.ts</code> 把 <code>node:http</code> 请求转成 Web Request，交给与浏览器端共用的一份业务核心 <code>functions/core/</code>：分块、检索词生成、输入校验、版本策略、周报规则、HTTP 路由。服务本身不缓存任何业务数据。</p>
+          </div>
+          <div class="arch-arrow">↓ seekdb npm SDK（MySQL 协议）</div>
+          <div class="arch-box strong">
+            <p class="arch-title">seekdb 1.4.0 · 唯一承担业务数据的数据库</p>
+            <p>
+              三张表：<code>researchloop.rl_sources</code>（资料与当前版本）、<code>researchloop.rl_material_chunks</code>（分块正文 + <code>FULLTEXT INDEX … WITH PARSER ngram</code> + revision + retired_at）、<code>researchloop.rl_actions</code>（行动项与出处引用，含 <code>ref_chunk_revision</code>）。
+              检索、过滤、排序全部在数据库内完成，进程内不做内存集合检索。
+            </p>
+          </div>
+        </div>
+
+        <h3 class="sub">关键实现</h3>
+        <div class="grid-2">
+          <article class="card">
+            <h3>检索下推进数据库</h3>
+            <p>默认解析器对中文返回空结果，实测改用 ngram 全文索引（索引词长 2）后数据库能直接给出相关度分数。检索语句只有一条：</p>
+            <pre><code>SELECT id, source_name, chunk_no, content,
+       MATCH(content) AGAINST(?) AS score
+FROM researchloop.rl_material_chunks
+WHERE workspace_id = ? AND retired_at IS NULL
+  AND MATCH(content) AGAINST(?)
+ORDER BY score DESC LIMIT ?</code></pre>
+          </article>
+          <article class="card">
+            <h3>资料版本与出处稳定性</h3>
+            <p>同名资料再次导入且内容变化时：版本号 +1，新分块写入，被替换的旧分块打上 <code>retired_at</code> 退休并保留在库中（不批量删除）。检索与列表只看当前版本；已有引用凭原始分块标识仍能解析，周报出处标注锁定的版本号。</p>
+            <p>内容长度超出分块容量上限时直接返回 <code>material_too_large</code> 并说明需要多少块，不静默丢弃尾部。</p>
+          </article>
+          <article class="card">
+            <h3>幂等写入与空间隔离</h3>
+            <p>分块标识为 <code>SHA-256(工作空间 | 资料名 | 块号 | 内容)</code>，重复导入相同内容只更新不新增；行动项标识由调用方幂等键派生，网络结果未知时重试不会产生第二条。所有读写都以 <code>workspace_id</code> 为条件，公开示例空间与个人空间互不可见。</p>
+          </article>
+          <article class="card">
+            <h3>周报为模板规则，出处可回溯</h3>
+            <p>三段内容由任务状态、完成日期与截止日期推导，响应带 <code>rule: "template"</code> 标记，正文首行写明整理方式。每条条目带「出处：文件名 · 第 N 块 · 版本 R」，逾期条目额外标注。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="results">
+        <h2>真实验证结果</h2>
+        <p class="section-lead">
+          验收脚本 <code>server/verify-flow.ts</code> 通过真实 HTTP 请求驱动核心服务与 seekdb，逐项断言并写出证据文件
+          <code>researchloop/results/seekdb-verify.json</code>。运行环境：Windows + WSL 内 seekdb 1.4.0（127.0.0.1:2881），
+          Node 22.20 运行核心服务（127.0.0.1:8788）。最近一次运行 30 项断言全部通过。
+        </p>
+        <div class="table-scroll">
+          <table>
+            <caption>断言分组与代表性结果</caption>
+            <thead>
+              <tr><th>分组</th><th>断言</th><th>实测结果</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>后端真实性</td>
+                <td><code>health.reports-seekdb</code></td>
+                <td>backend = seekdb，label = 「seekdb 1.4.0 · 库内 ngram 全文检索」</td>
+              </tr>
+              <tr>
+                <td>导入与幂等</td>
+                <td><code>import.*</code> / <code>import.idempotent-reimport</code></td>
+                <td>5 份公开示例资料入库；重复导入 created = 0、skipped &gt; 0、retired = 0、版本不变</td>
+              </tr>
+              <tr>
+                <td>检索质量</td>
+                <td><code>search.returns-ranked-hits</code> / <code>search.hit-has-provenance</code></td>
+                <td>retrieval = database-fulltext-ranked，tookMs ≈ 4–7；首位命中「实验复现清单.md · 第 1 块 · 版本 2」，score = 0.3441</td>
+              </tr>
+              <tr>
+                <td>空间隔离</td>
+                <td><code>search.workspace-isolation</code></td>
+                <td>未导入资料的空间返回 0 条命中</td>
+              </tr>
+              <tr>
+                <td>行动项闭环</td>
+                <td><code>action.create-with-provenance</code> / <code>action.idempotent-retry</code> / <code>action.complete</code></td>
+                <td>创建返回 201 且 <code>ref_chunk_revision</code> 与命中分块版本一致；同幂等键重试返回同一 id；完成后 completedAt 落库</td>
+              </tr>
+              <tr>
+                <td>周报</td>
+                <td><code>report.contains-completed-action</code> / <code>report.declares-template-rule</code></td>
+                <td>本周完成段落含该任务与「出处：…」；rule = template，区间 2026-10-26 ~ 2026-11-01</td>
+              </tr>
+              <tr>
+                <td>持久化</td>
+                <td><code>state.persisted-in-seekdb</code></td>
+                <td>重新读取 state：sources = 5、chunks = 6、actions &gt; 0，数据全部来自数据库</td>
+              </tr>
+              <tr>
+                <td>失败路径</td>
+                <td><code>search.empty-query-rejected</code> / <code>route.unknown-404</code> / <code>import.over-length-rejected</code></td>
+                <td>空问题 400 <code>empty_query</code>；未知路由 404；200,010 字符资料 400 <code>material_too_large</code></td>
+              </tr>
+              <tr>
+                <td>长文本不截断</td>
+                <td><code>import.long-material-all-chunks</code> / <code>import.long-material-tail-searchable</code></td>
+                <td>182,429 字符 → 415 块全部入库（旧实现会在 400 块处静默丢尾）；检索「尾部校验标记」命中第 415 块（chunkNo 414）</td>
+              </tr>
+              <tr>
+                <td>版本与引用稳定性</td>
+                <td><code>version.*</code>（8 项）</td>
+                <td>改版后 revision = 2、retired = 1；退休分块不再出现在检索结果；当前分块号唯一无重复；引用旧分块标识仍可创建行动项并锁定「版本 1」；周报出处显示「版本 1」</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="section-foot">
+          完整断言明细（含每条响应体）见代码仓库
+          <a href="https://github.com/sleepz1/powercontext/blob/feature/researchloop-qoder/qoder/researchloop/results/seekdb-verify.json" target="_blank" rel="noreferrer">qoder/researchloop/results/seekdb-verify.json</a>。
+          验证用的 <code>verify</code>、<code>verify-large</code>、<code>verify-version-*</code> 空间与演示用的 <code>public-demo</code>、<code>my-space</code> 相互隔离。
+        </p>
+      </section>
+
+      <section id="shots">
+        <h2>界面截图</h2>
+        <p class="section-lead">
+          以下截图拍摄自本机真实运行界面（Windows 桌面视口，连接 seekdb 1.4.0），依次覆盖导入资料 → 库内检索 → 行动项 → 周报的验收路径。
+        </p>
+        <div class="shots">
+          <figure class="shot">
+            <img src="./screenshots/01-workbench.jpg" alt="资料检索页：问题「怎样保证实验可以复现」的命中结果，显示原文片段、库内分值与出处" loading="lazy" />
+            <figcaption>
+              <strong>资料检索</strong> · 问题「怎样保证实验可以复现」由 seekdb 库内 ngram 全文索引排序返回，耗时 13 ms。每条命中显示原文、库内分值与出处，例如「实验复现清单.md · 第 1 块 · 版本 1」（分值 4.1054）。
+            </figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./screenshots/02-library-versions.jpg" alt="资料库页：5 份资料、6 个分块的清单，每份资料显示块数与版本 1" loading="lazy" />
+            <figcaption>
+              <strong>资料库</strong> · 导入公开示例后共 5 份资料、6 个分块：开题报告-片段.md、seekdb-检索要点.txt、组会纪要-2026-04.md、论文阅读方法.md 各 1 块 · 版本 1，实验复现清单.md 为 2 块 · 版本 1。
+            </figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./screenshots/03-actions.jpg" alt="行动项页：两条已完成任务，显示负责人、截止日期与锁定版本的出处" loading="lazy" />
+            <figcaption>
+              <strong>行动项</strong> · 两条任务均已完成：核对 ngram 索引词长与解析器配置（王同学，截止 2026-10-30），补齐实验依赖版本与锁文件（示例研究员，截止 2026-11-04）。出处分别锁定「seekdb-检索要点.txt · 第 1 块 · 版本 1」与「实验复现清单.md · 第 1 块 · 版本 1」。
+            </figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./screenshots/04-report.jpg" alt="周报页：本周完成、待解决问题、下周计划三段结构与可复制纯文本" loading="lazy" />
+            <figcaption>
+              <strong>周报</strong> · 区间 2026-10-26 ~ 2026-11-01，按模板规则从任务表整理为「本周完成 2 / 待解决问题 0 / 下周计划 0」，条目自带出处，纯文本可一键复制。
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="run">
+        <h2>本地运行步骤</h2>
+        <p class="section-lead">核心应用完全在本机运行，发布环境不需要、也不会连接云端 seekdb。以下步骤按 Windows + WSL 实测编写。</p>
+        <ol class="run">
+          <li>
+            <p class="run-title">1. 启动 seekdb（WSL，127.0.0.1:2881）</p>
+            <pre><code># 一次性安装：官方镜像下载 → 校验 SHA-256 → 解包，不注册系统服务、不删除任何目录
+wsl -d Ubuntu -- bash /mnt/e/project/oceanbase-ecosystem-2026/stepfun/scripts/install-seekdb-wsl.sh
+
+# 启动（保持前台运行，数据目录位于 WSL 原生文件系统）
+wsl -d Ubuntu -- bash /mnt/e/project/oceanbase-ecosystem-2026/stepfun/scripts/start-seekdb-wsl.sh</code></pre>
+            <p class="run-check">确认端口可达：Windows 侧 <code>netstat -ano | findstr 2881</code> 出现 LISTENING。</p>
+          </li>
+          <li>
+            <p class="run-title">2. 启动核心服务（真实数据库读写）</p>
+            <pre><code>cd qoder/researchloop/server
+npm ci
+npm start          # 监听 http://127.0.0.1:8788，首次启动自动建表并补齐版本列</code></pre>
+            <p class="run-check">冒烟检查：<code>curl http://127.0.0.1:8788/api/health</code> 返回 <code>"backend":"seekdb"</code>。</p>
+          </li>
+          <li>
+            <p class="run-title">3. 启动前端工作台</p>
+            <pre><code>cd qoder/researchloop
+npm ci
+npm run dev        # Vite 输出 http://127.0.0.1:5173，/api 代理到 8788</code></pre>
+            <p class="run-check">浏览器打开该地址 →「资料库」→「导入 5 份公开示例资料」→「资料检索」问「怎样保证实验可以复现」。</p>
+          </li>
+          <li>
+            <p class="run-title">4. 复跑端到端验收</p>
+            <pre><code>cd qoder/researchloop
+npm run verify     # 真实 HTTP + 真实 seekdb，逐项断言并写 results/seekdb-verify.json</code></pre>
+            <p class="run-check">期望末行输出「全部通过：30/30」。</p>
+          </li>
+          <li>
+            <p class="run-title">5. 本地预览本介绍页（可选）</p>
+            <pre><code>cd qoder/researchloop
+npm run serve:site # http://127.0.0.1:4174 提供静态介绍页与截图</code></pre>
+          </li>
+        </ol>
+        <p class="section-foot">生产构建：<code>npm run build</code>（先 <code>tsc --noEmit</code> 类型检查，再产出 <code>dist/</code>）。端口约定：seekdb 2881、核心服务 8788、前端 5173、介绍页 4174。</p>
+      </section>
+
+      <section id="log">
+        <h2>Qoder 开发记录</h2>
+        <p>
+          主体实现由 Qoder CLI 会话完成，过程记录写在 <code>researchloop/DEVLOG.md</code>（按实际推进顺序追加，不倒填）。
+          可复核的轨迹包括：Qoder Sites 能力核查、seekdb 中文检索实测脚本（<code>server/probe.ts</code>、
+          <code>server/probe-fulltext.ts</code>）、核心逻辑与前端实现、端到端验收脚本与其输出证据。
+          分块与「检索下推进数据库」的思路复用了同仓库 <code>stepfun</code>（04 题）的实测结论；
+          资料版本策略、行动项与周报为本赛题新实现。
+        </p>
+        <p class="repo">
+          代码仓库：<a href="https://github.com/sleepz1/powercontext/tree/feature/researchloop-qoder/qoder/researchloop" target="_blank" rel="noreferrer">sleepz1/powercontext · feature/researchloop-qoder</a>（本作品位于 <code>qoder/researchloop/</code>）
+        </p>
+      </section>
+
+      <section id="limits">
+        <h2>边界与说明</h2>
+        <ul class="limits">
+          <li>周报由模板规则生成，页面与文本都明确标注，不声称由 AI 生成。</li>
+          <li>检索只返回数据库中真实存在且带出处的片段；后端不可用时页面显示失败状态，不用内存示例结果替代。</li>
+          <li>公开示例资料为参赛者整理的虚构学习科研材料，不含真实个人数据、凭据或未公开实验结果。</li>
+          <li>本页是 Qoder Sites 静态作品展示站（作品介绍与验收入口）；赛题指定的数据库能力由本机 seekdb 真实实现，不使用其他数据库冒充指定技术。</li>
+          <li>退休分块只标记不删除，因此历史出处可解析；导入与验证会在数据库中累积记录，不做批量清理。</li>
+          <li>资料长度上限 200,000 字符 / 单份最多 460 块；超出即明确拒绝，不静默截断。</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>研途 ResearchLoop · 2026 OceanBase × Qoder 生态挑战赛 03 题作品</p>
+        <p>核心应用：本地 seekdb 1.4.0 + Node 服务 + React；本介绍站：Qoder Sites 静态站点</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -4,9 +4,9 @@
 
 | 题目 | 源码 / 材料 | 当前进展 |
 | --- | --- | --- |
-| 03 Qoder 提效项目「研途」 | [方案与开发入口](qoder/README.md) | CLI 已安装；本机 CLI 授权尚未验证成功，主体开发及 Sites 发布待完成 |
-| 04 端侧 AI 与 seekdb「知页」 | [运行说明](stepfun/README.md) · [一页报告](stepfun/output/pdf/technical-report.pdf) | 已完成真实数据库、浏览器和生产构建验证；包含完整原始实测数据 |
-| 06 高德附近推荐 | [SKILL.md](gaode/SKILL.md) | 单文件已完成并通过格式校验，比赛环境提供 MCP 与 Key |
+| 03 Qoder 提效项目「研途」 | [运行与验收](qoder/researchloop/README.md) | Qoder 主体开发已完成，真实 seekdb 验收 30/30；[展示站已公开](https://yantu-researchloop-lr92v5hwg45.qoder.website) |
+| 04 端侧 AI 与 seekdb「知页」 | [运行说明](stepfun/README.md) · [一页报告](stepfun/output/pdf/technical-report.pdf) | 已独立提测，平台 20.000 / 20 分 |
+| 06 高德附近推荐 | [SKILL.md](gaode/SKILL.md) | 已独立提测，平台 20.000 / 20 分 |
 
 04 的浏览器端和查询端均在本机向量化，seekdb-js 负责真实数据库内混合检索。INT8 在小样例上保持质量；本机 WebGPU 数值检查不通过时自动回退 WASM，详见报告的实际数据和限制。
 
@@ -16,4 +16,4 @@
 
 04 本地网站：`http://127.0.0.1:8787`；运行前按 stepfun README 启动 WSL 数据库与 API。模型权重、依赖、数据库、密码和浏览器状态均不进 Git。
 
-私有仓库已创建，03、04、06 当前材料已推送。**尚未在比赛平台正式提交，暂无官方得分。** 分题状态见 [SUBMISSIONS.md](SUBMISSIONS.md)。
+私有备份仓库已创建。04、06 的评测代码已同步到报名登记的团队仓库 `sleepz1/powercontext` 的 `feature/ecosystem-ae04-ae06` 分支并分别通过测试。分题回执与状态见 [SUBMISSIONS.md](SUBMISSIONS.md)。
