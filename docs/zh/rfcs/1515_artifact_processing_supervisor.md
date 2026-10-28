@@ -479,6 +479,8 @@ API 与后台必须对 mode、binding 到 Family 的映射以及可触发能力�
 | `ARTIFACT_PROCESSING_SUPERVISOR_MODE` | `artifact_processing_supervisor_mode` | `global`；仅允许 `global`、`dedicated` |
 | `ARTIFACT_PROCESSING_ROLE` | `artifact_processing_role` | `all`；后端支持范围见上文 |
 | `<ARTIFACT>_SCHEDULE_SECONDS` | `<artifact>_schedule_seconds` | 未设置/None 关闭自动准入；配置值必须大于 0 |
+| `MEMORY_SOURCE_COUNT_THRESHOLD` | `memory_source_count_threshold` | 未设置/None 时 Memory 仍只按时间准入。配置值必须是严格正整数。成功游标之后的新 journal 身份达到门槛时，接受一次 Memory 窗口。数量条件与时间间隔为 OR。显式 flush 绕过数量门槛。一次窗口成功后按剩余数量重新判断。 |
+| `TOPIC_MEMORY_SOURCE_COUNT_THRESHOLD` | `topic_memory_source_count_threshold` | Topic Memory 使用同一规则。已经接受的波次继续按原有分窗完成，门槛不再施加到该波次的后续窗口。 |
 | `<ARTIFACT>_SCHEDULE_ENABLED` | `<artifact>_schedule_enabled` | cron 制品的显式开关；首个使用者为 Profile |
 | `<ARTIFACT>_CRON` | `<artifact>_cron` | 五段 cron；必须与合法 IANA timezone 一起解析 |
 | `<ARTIFACT>_TIMEZONE` | `<artifact>_timezone` | cron 时区；Profile 保持 `Asia/Shanghai` 默认值 |

@@ -50,6 +50,7 @@ from powercontext._logging import log_safely
 from powercontext.builtin.persistence.database import AsyncDatabase
 from powercontext.builtin.persistence.errors import ArtifactProcessingLeadershipLostError
 from powercontext.builtin.persistence.processing_intents import ArtifactProcessingIntentRepository
+from powercontext.builtin.persistence.source_counts import request_pending_source_count
 from powercontext.builtin.persistence.supervision import (
     ArtifactProcessingBindingStateRepository,
     ArtifactProcessingFence,
@@ -117,6 +118,7 @@ class ArtifactProcessingBinding:
     # Only automatic admission is filtered; already accepted requests retain
     # their own Worker authorization and domain completion semantics.
     automatic_scope_filter: Callable[[AsyncConnection, tuple[str, ...]], Awaitable[frozenset[str]]] | None = None
+    source_count_threshold: int | None = None
 
     def __post_init__(self) -> None:
         if not self.binding_name or self.binding_name != self.binding_name.strip():
@@ -138,6 +140,12 @@ class ArtifactProcessingBinding:
                 raise ValueError("interval and cron cannot both be enabled")  # noqa: TRY003
         if self.cron is not None:
             CronTrigger.from_crontab(self.cron, timezone=ZoneInfo(self.timezone))
+        _require_source_count_threshold(self.source_count_threshold)
+
+
+def _require_source_count_threshold(value: int | None) -> None:
+    if value is not None and (type(value) is not int or value < 1):
+        raise ValueError("source_count_threshold must be a strict positive integer")  # noqa: TRY003
 
 
 class _WorkerResultSender(Protocol):
@@ -994,6 +1002,7 @@ class ArtifactProcessingSupervisor:
                     )
                 state.retries.pop(scope, None)
                 state.completed += 1
+                await self._admit_source_count(state, scope)
                 if row.requested_generation > row.handled_generation:
                     self.wake(state.binding.binding_name)
             except (ArtifactProcessingLeadershipLostError, _WorkerTerminationError):
@@ -1015,6 +1024,27 @@ class ArtifactProcessingSupervisor:
                 if not retain_slot:
                     state.running.pop(scope, None)
                     self.wake(state.binding.binding_name)
+
+    async def _admit_source_count(self, state: _FamilyState, scope: str) -> None:
+        """Request another window when the post-success cursor still meets the threshold.
+
+        Topic waves finish inside the accepted invocation, so this only starts a
+        later wave. Memory consumes one window per invocation and stops while the
+        remainder is below the threshold. Admission failure must not turn a
+        committed invocation into a retry of work that already succeeded.
+        """
+
+        threshold = state.binding.source_count_threshold
+        if threshold is None:
+            return
+        try:
+            async with self._database.transaction() as connection:
+                await self._leases.require_fence(connection, self._require_current_fence())
+                await request_pending_source_count(connection, scope, state.binding.binding_name, threshold)
+        except ArtifactProcessingLeadershipLostError:
+            raise
+        except Exception as error:
+            self._log_failure(state, None, error, "source_count_admission")
 
     async def _lose_leadership(self) -> None:
         fence, self._fence = self._fence, None

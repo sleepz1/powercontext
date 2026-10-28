@@ -567,6 +567,7 @@ async def open_builtin_runtime(
                         else b.automatic_processing_interval.total_seconds(),
                         "cron": b.cron,
                         "timezone": b.timezone,
+                        "source_count_threshold": b.source_count_threshold,
                     }
                     for b in processing_bindings
                 ],
@@ -656,6 +657,7 @@ async def open_builtin_runtime(
         runtime.artifact_processing_supervisor = await resources.enter_async_context(
             _open_artifact_processing_supervisor(config, contexts, processing_bindings, tracing=tracing)
         )
+        _bind_source_count_notifier(runtime, contexts)
         contexts.profiles.operation_context = runtime._operation
         if config.handoff_report.enabled:
             runtime.handoff_report = HandoffReportApplication(
@@ -690,6 +692,36 @@ def _validate_processing_source_registry(
         )
     ):
         raise BuiltinConfigurationError("artifact-processing-source-registry")
+
+
+def _bind_source_count_notifier(runtime: BuiltinRuntime, contexts: RelationalContexts) -> None:
+    """Wake this process's supervisor after a committed count admission."""
+
+    def wake(binding_name: str) -> None:
+        supervisor = runtime.artifact_processing_supervisor
+        if supervisor is not None:
+            supervisor.wake(binding_name)
+
+    contexts.records.set_source_count_notifier(wake)
+
+
+def _family_source_count_threshold(config: BuiltinConfig, family: str) -> int | None:
+    """Return the count threshold for one enabled Family, or None when it is closed."""
+
+    if family == "memory":
+        return config.runtime.memory_source_count_threshold
+    if family == "topic-memory":
+        return config.runtime.topic_memory_source_count_threshold
+    return None
+
+
+def _enabled_source_count_thresholds(config: BuiltinConfig) -> tuple[int | None, int | None]:
+    """Expose count admission only for Families this deployment will process."""
+
+    enabled = set(processing_capabilities(config))
+    memory = config.runtime.memory_source_count_threshold if "memory" in enabled else None
+    topic = config.runtime.topic_memory_source_count_threshold if "topic-memory" in enabled else None
+    return memory, topic
 
 
 def _artifact_processing_bindings(  # noqa: C901 - validate and assemble one registration per Family
@@ -785,8 +817,14 @@ def _artifact_processing_bindings(  # noqa: C901 - validate and assemble one reg
                 timezone=config.runtime.profile_timezone if family == "profile" else "Asia/Shanghai",
                 pending_provider=None
                 if family == "skill"
-                else SourceProcessingPendingProvider(contexts.database, binding, family),
+                else SourceProcessingPendingProvider(
+                    contexts.database,
+                    binding,
+                    family,
+                    source_count_threshold=_family_source_count_threshold(config, family),
+                ),
                 automatic_scope_filter=enabled_profile_scopes if family == "profile" else None,
+                source_count_threshold=_family_source_count_threshold(config, family),
             )
         )
     _validate_processing_registrations(configured)
@@ -879,6 +917,7 @@ async def open_builtin_contexts(
     """Open the selected database and expose scope-bound PowerContext providers."""
 
     database = config.database
+    memory_count_threshold, topic_count_threshold = _enabled_source_count_thresholds(config)
     configured_token_estimator = character_token_estimator() if token_estimator is None else token_estimator
     if isinstance(database, SQLiteConfig):
         experience_index = SQLiteExperienceFTSIndex()
@@ -950,6 +989,8 @@ async def open_builtin_contexts(
                 source_registry=source_registry,
                 cursor_secret=cursor_secret,
                 tracing=tracing,
+                memory_source_count_threshold=memory_count_threshold,
+                topic_memory_source_count_threshold=topic_count_threshold,
             )
             try:
                 await contexts.scopes.bootstrap_default()
@@ -1027,6 +1068,8 @@ async def open_builtin_contexts(
             source_registry=source_registry,
             cursor_secret=cursor_secret,
             tracing=tracing,
+            memory_source_count_threshold=memory_count_threshold,
+            topic_memory_source_count_threshold=topic_count_threshold,
         )
         try:
             await contexts.scopes.bootstrap_default()

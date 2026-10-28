@@ -835,6 +835,7 @@ The first release adds or uses these deployment-level settings:
 | Setting | Default | Semantics |
 |---|---:|---|
 | `runtime.topic_memory_schedule_seconds` | `None` | Disable automatic waves when unset; use as the interval when greater than 0; treat values less than or equal to 0 as configuration errors |
+| `runtime.topic_memory_source_count_threshold` | `None` | Disable count admission when unset. A strict positive integer admits one wave when new journal identities since the successful cursor reach it. OR with the time interval. An accepted wave keeps its later windows. Explicit flush bypasses the count. |
 | `runtime.topic_memory_source_window_limit` | `10` | Maximum number of Sources in one Window |
 | `runtime.topic_memory_history_max_candidates` | `20` | Maximum number of historical Topic candidates |
 | `runtime.topic_memory_history_rrf_threshold` | `70` | Acceptance threshold for RRF normalized to 0..100 |

@@ -16,6 +16,7 @@
 
 from __future__ import annotations
 
+import logging
 from collections.abc import Awaitable, Callable, Mapping
 from contextlib import aclosing
 from datetime import UTC, datetime
@@ -28,8 +29,10 @@ from pydantic import JsonValue, TypeAdapter, ValidationError
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
+from powercontext._logging import log_safely
 from powercontext.artifacts import Artifact, ArtifactRef
 from powercontext.builtin.artifacts.memory import MemoryCitation, MemoryEntryVersion, MemoryService
+from powercontext.builtin.artifacts.topic_memory import TOPIC_MEMORY_SOURCE_WINDOW_BINDING
 from powercontext.builtin.persistence.artifacts import ArtifactRepository
 from powercontext.builtin.persistence.cursor_codec import SignedCursorCodec
 from powercontext.builtin.persistence.database import AsyncDatabase
@@ -43,6 +46,7 @@ from powercontext.builtin.persistence.family_management import (
 )
 from powercontext.builtin.persistence.memory import RelationalMemoryBackend
 from powercontext.builtin.persistence.processing import ArtifactProcessingPendingRepository
+from powercontext.builtin.persistence.source_counts import request_pending_source_count
 from powercontext.builtin.persistence.sources import SourceRepository, StoredSource
 from powercontext.builtin.persistence.tables import (
     ARTIFACT_HEADS_TABLE,
@@ -80,11 +84,14 @@ from powercontext.builtin.sources import (
     ContentSourceTarget,
 )
 from powercontext.builtin.tags import ArtifactTagSet, TagFilter, TagQuery, TagQueryPage, TagTarget
+from powercontext.builtin.triggers import SOURCE_WINDOW_TRIGGER_NAME
 from powercontext.errors import RevisionConflictError
 from powercontext.sources import SourceMaterialization, SourceRef
 
 Clock = Callable[[], datetime]
 IdFactory = Callable[[str], str]
+SourceCountNotifier = Callable[[str], None]
+logger = logging.getLogger(__name__)
 
 
 _JSON_VALUE = TypeAdapter(JsonValue)
@@ -119,6 +126,8 @@ class RelationalRecordService:
         processing_pending: ArtifactProcessingPendingRepository | None = None,
         source_processing_bindings: tuple[str, ...] = (),
         topic_memory_list_reader: ArtifactListReader | None = None,
+        memory_source_count_threshold: int | None = None,
+        topic_memory_source_count_threshold: int | None = None,
     ) -> None:
         self._database = database
         self._sources = sources
@@ -135,6 +144,11 @@ class RelationalRecordService:
         self._processing_pending = processing_pending
         self._source_processing_bindings = source_processing_bindings
         self._topic_memory_list_reader = topic_memory_list_reader
+        self._source_count_thresholds = (
+            (SOURCE_WINDOW_TRIGGER_NAME, memory_source_count_threshold),
+            (TOPIC_MEMORY_SOURCE_WINDOW_BINDING, topic_memory_source_count_threshold),
+        )
+        self._source_count_notifier: SourceCountNotifier | None = None
         self._tags = RelationalTagService(
             database,
             artifacts,
@@ -142,6 +156,47 @@ class RelationalRecordService:
             clock=self._clock,
             cursor_ttl_seconds=cursor_ttl_seconds,
         )
+
+    def set_source_count_notifier(self, notifier: SourceCountNotifier | None) -> None:
+        """Wake the in-process supervisor after a committed count admission."""
+
+        self._source_count_notifier = notifier
+
+    async def admit_configured_source_counts(self, scope_id: str) -> None:
+        """Re-check both Family thresholds after an inline Memory window commits."""
+
+        if all(threshold is None for _, threshold in self._source_count_thresholds):
+            return
+        async with self._database.transaction() as connection:
+            admitted = await self._admit_source_counts(connection, scope_id)
+        self._notify_source_count(admitted)
+
+    async def _admit_source_counts(self, connection: AsyncConnection, scope_id: str) -> tuple[str, ...]:
+        admitted: list[str] = []
+        for binding_name, threshold in self._source_count_thresholds:
+            if await request_pending_source_count(connection, scope_id, binding_name, threshold):
+                admitted.append(binding_name)
+        return tuple(admitted)
+
+    def _notify_source_count(self, bindings: tuple[str, ...]) -> None:
+        notifier = self._source_count_notifier
+        if notifier is None:
+            return
+        for binding_name in bindings:
+            try:
+                notifier(binding_name)
+            except Exception as error:
+                log_safely(
+                    logger,
+                    logging.WARNING,
+                    "Source count supervisor wake failed after admission",
+                    exc_info=error,
+                    extra={
+                        "event": "artifact_processing.count_wake_failed",
+                        "outcome": "accepted",
+                        "binding": binding_name,
+                    },
+                )
 
     async def get_tags(self, scope_id: str, target: TagTarget) -> ArtifactTagSet:
         return await self._tags.get(scope_id, target)
@@ -204,6 +259,7 @@ class RelationalRecordService:
         source_type: str,
         source: ContentSource,
     ) -> SourceRecord:
+        admitted: tuple[str, ...] = ()
         try:
             async with self._database.transaction() as connection:
                 stored, created = await self._sources.add_with_status(connection, scope_id, source)
@@ -215,8 +271,11 @@ class RelationalRecordService:
                             binding_name,
                             stored.journal_position,
                         )
+                if created:
+                    admitted = await self._admit_source_counts(connection, scope_id)
         except StoredPayloadConflictError as error:
             raise BaseValueConflictError("source", (scope_id, source_type, source.name)) from error
+        self._notify_source_count(admitted)
         return _source_record(scope_id, stored)
 
     async def get_source(self, scope_id: str, source_type: str, source_id: str, /) -> SourceRecord:
@@ -332,12 +391,15 @@ class RelationalRecordService:
             if isinstance(writer, PreparingFamilyManagementWriter)
             else command
         )
+        admitted: tuple[str, ...] = ()
         try:
             async with self._database.transaction() as connection:
                 stored = await self._sources.add(connection, scope_id, source)
                 artifact = await writer.create(connection, scope_id, artifact_id, prepared, stored.ref)
+                admitted = await self._admit_source_counts(connection, scope_id)
         except (StoredPayloadConflictError, RevisionConflictError) as error:
             raise BaseValueConflictError("artifact", (scope_id, family, artifact_id)) from error
+        self._notify_source_count(admitted)
         return _artifact_created(scope_id, artifact)
 
     async def get_artifact(self, scope_id: str, family: str, artifact_id: str, /) -> ArtifactRecord:
@@ -579,6 +641,7 @@ class RelationalRecordService:
             if expected_etag != _artifact_etag(current_record.revision):
                 raise ArtifactRevisionPreconditionError(expected_etag, _artifact_etag(current_record.revision))
             prepared = await writer.prepare(command, usage_scope_id=scope_id)
+        admitted: tuple[str, ...] = ()
         async with self._database.transaction() as connection:
             try:
                 current = await self._artifacts.latest(connection, scope_id, family, artifact_id)
@@ -612,11 +675,13 @@ class RelationalRecordService:
             try:
                 stored = await self._sources.add(connection, scope_id, source)
                 revised = await writer.replace(connection, scope_id, current, prepared, stored.ref)
+                admitted = await self._admit_source_counts(connection, scope_id)
             except StoredPayloadConflictError as error:
                 raise BaseValueConflictError("source", (scope_id, CONTENT_SOURCE_NAME, source.name)) from error
             except RevisionConflictError:
                 latest = await self._artifacts.latest(connection, scope_id, family, artifact_id)
                 raise ArtifactRevisionPreconditionError(expected_etag, _artifact_etag(latest.revision)) from None
+        self._notify_source_count(admitted)
         return _artifact_record(scope_id, revised)
 
     async def list_scopes(self, *, limit: int, cursor: str | None) -> ScopeSummaryPage:
