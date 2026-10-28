@@ -1,0 +1,12 @@
+**/node_modules/
+**/dist/
+**/.env
+**/.env.*
+**/models/
+**/public/ort/
+**/test-results/
+**/.cache/
+**/playwright-report/
+**/runtime/
+**/*.log
+!.env.example

@@ -1,0 +1,3475 @@
+{
+  "recordedAt": "2026-10-28T11:04:45.882Z",
+  "model": {
+    "id": "Xenova/multilingual-e5-small",
+    "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78",
+    "dimension": 384,
+    "pooling": "mean",
+    "normalize": true
+  },
+  "manifest": {
+    "id": "Xenova/multilingual-e5-small",
+    "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78",
+    "source": "https://hf-mirror.com",
+    "measuredAt": "2026-10-28T10:46:48.179Z",
+    "files": [
+      {
+        "file": "config.json",
+        "bytes": 658,
+        "sha256": "cb99455288675345e1a4f411438d5d0adbba5fbd3a67ea4fb03c015433b996c1"
+      },
+      {
+        "file": "tokenizer.json",
+        "bytes": 17082730,
+        "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+      },
+      {
+        "file": "tokenizer_config.json",
+        "bytes": 443,
+        "sha256": "a1d6bc8734a6f635dc158508bef000f8e2e5a759c7d92f984b2c86e5ff53425b"
+      },
+      {
+        "file": "special_tokens_map.json",
+        "bytes": 167,
+        "sha256": "d05497f1da52c5e09554c0cd874037a083e1dc1b9cfd48034d1c717f1afc07a7"
+      },
+      {
+        "file": "onnx/model.onnx",
+        "bytes": 470268533,
+        "sha256": "4aa845c27760e06e9a686b9d8b5d440eae4b6612cd09e5b522b716d3941f77ff"
+      },
+      {
+        "file": "onnx/model_quantized.onnx",
+        "bytes": 118308185,
+        "sha256": "f80102d3f2a1229f387d3c81909990d8945513e347b0eab049f7de3c6f98c193"
+      }
+    ],
+    "fp32Bytes": 470268533,
+    "int8Bytes": 118308185,
+    "compressionRatio": 3.9749450386716694,
+    "accounting": "ONNX 权重文件大小；公共 tokenizer/config 文件单独列出，精度共享"
+  },
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "hardwareConcurrency": 32,
+  "corpusChunks": 12,
+  "queryCount": 6,
+  "method": "原始计时含 3 次语料向量化及 3 轮查询；首次模型加载独立记录；热查询含 Worker 与本地 API 往返，不含 UI 绘制。样例集质量仅代表该集。",
+  "runs": [
+    {
+      "config": {
+        "label": "FP32 / WASM / batch 1",
+        "dtype": "fp32",
+        "backend": "wasm",
+        "batch": 1
+      },
+      "actualBackend": {
+        "device": "wasm",
+        "dtype": "fp32",
+        "reason": "已显式选择 WASM，用于降级验证/基线比较",
+        "loadMs": 3445.6000000089407,
+        "model": "Xenova/multilingual-e5-small",
+        "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78"
+      },
+      "loadMs": 3505.5999999940395,
+      "firstQueryMs": 75.90000000596046,
+      "corpusEmbeddingMs": [
+        895.4000000059605,
+        776.1999999880791,
+        715.2999999970198
+      ],
+      "documentsPerSecond": 15.459933007194405,
+      "lastWrite": {
+        "count": 12,
+        "writeMs": 29.45899999991525,
+        "refreshMs": 502.7881000000052
+      },
+      "raw": [
+        {
+          "repeat": 0,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0303
+            }
+          ],
+          "inferenceMs": 19.700000002980232,
+          "searchMs": 44.37330000009388,
+          "endToEndMs": 71.90000000596046,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0303
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            }
+          ],
+          "inferenceMs": 27.299999997019768,
+          "searchMs": 45.07380000001285,
+          "endToEndMs": 79.3999999910593,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 23.600000008940697,
+          "searchMs": 44.58929999999236,
+          "endToEndMs": 75.80000001192093,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0301
+            }
+          ],
+          "inferenceMs": 26.900000005960464,
+          "searchMs": 45.99140000005718,
+          "endToEndMs": 79.40000000596046,
+          "recall": 1,
+          "ndcg": 0.8772153153380493,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.032
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 19.100000008940697,
+          "searchMs": 44.9613000000827,
+          "endToEndMs": 71.80000001192093,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 24.30000001192093,
+          "searchMs": 44.570100000011735,
+          "endToEndMs": 75.70000000298023,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0303
+            }
+          ],
+          "inferenceMs": 20.100000008940697,
+          "searchMs": 45.90670000005048,
+          "endToEndMs": 72.29999999701977,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0303
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            }
+          ],
+          "inferenceMs": 25,
+          "searchMs": 44.5566000000108,
+          "endToEndMs": 76.29999999701977,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 22.100000008940697,
+          "searchMs": 46.525499999988824,
+          "endToEndMs": 75.40000000596046,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0301
+            }
+          ],
+          "inferenceMs": 24.099999994039536,
+          "searchMs": 46.2497999999905,
+          "endToEndMs": 76.5,
+          "recall": 1,
+          "ndcg": 0.8772153153380493,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.032
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 18.399999991059303,
+          "searchMs": 46.34219999995548,
+          "endToEndMs": 71.09999999403954,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 25.5,
+          "searchMs": 43.980699999956414,
+          "endToEndMs": 75.79999999701977,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0303
+            }
+          ],
+          "inferenceMs": 19.900000005960464,
+          "searchMs": 45.79720000002999,
+          "endToEndMs": 72.20000000298023,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0303
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            }
+          ],
+          "inferenceMs": 26.100000008940697,
+          "searchMs": 47.28639999998268,
+          "endToEndMs": 80,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 22.200000002980232,
+          "searchMs": 43.525499999988824,
+          "endToEndMs": 71.79999999701977,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0301
+            }
+          ],
+          "inferenceMs": 24.299999997019768,
+          "searchMs": 44.833800000022165,
+          "endToEndMs": 76.3999999910593,
+          "recall": 1,
+          "ndcg": 0.8772153153380493,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.032
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 17.899999991059303,
+          "searchMs": 43.556199999991804,
+          "endToEndMs": 67.79999999701977,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 27.400000005960464,
+          "searchMs": 45.695300000021234,
+          "endToEndMs": 79.70000000298023,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        }
+      ],
+      "medianSearchMs": 45.01755000004778,
+      "medianEndToEndMs": 75.75,
+      "recallAt5": 0.8333333333333334,
+      "ndcgAt5": 0.7890732424067373
+    },
+    {
+      "config": {
+        "label": "INT8 / WASM / batch 1",
+        "dtype": "q8",
+        "backend": "wasm",
+        "batch": 1
+      },
+      "actualBackend": {
+        "device": "wasm",
+        "dtype": "q8",
+        "reason": "已显式选择 WASM，用于降级验证/基线比较",
+        "loadMs": 825.1000000089407,
+        "model": "Xenova/multilingual-e5-small",
+        "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78"
+      },
+      "loadMs": 897.5999999940395,
+      "firstQueryMs": 82.79999999701977,
+      "corpusEmbeddingMs": [
+        577.7000000029802,
+        674.4000000655651,
+        672.9000000208616
+      ],
+      "documentsPerSecond": 17.833259027534506,
+      "lastWrite": {
+        "count": 12,
+        "writeMs": 30.00309999997262,
+        "refreshMs": 502.8512000000337
+      },
+      "raw": [
+        {
+          "repeat": 0,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.031
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 14.700000002980232,
+          "searchMs": 46.69750000000931,
+          "endToEndMs": 69.59999999403954,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 23.69999998807907,
+          "searchMs": 45.11109999998007,
+          "endToEndMs": 76.20000000298023,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 22.799999997019768,
+          "searchMs": 44.82250000000931,
+          "endToEndMs": 75.90000000596046,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0297
+            }
+          ],
+          "inferenceMs": 25.30000001192093,
+          "searchMs": 47.05129999993369,
+          "endToEndMs": 80,
+          "recall": 1,
+          "ndcg": 0.9197207891481876,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0317
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 19.599999994039536,
+          "searchMs": 44.41810000000987,
+          "endToEndMs": 72.20000000298023,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 17.30000001192093,
+          "searchMs": 45.875800000038,
+          "endToEndMs": 71.09999999403954,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.031
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 15.799999997019768,
+          "searchMs": 47.60269999993034,
+          "endToEndMs": 72.20000000298023,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 17.799999997019768,
+          "searchMs": 46.59289999993052,
+          "endToEndMs": 72.29999999701977,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 22.5,
+          "searchMs": 45.752700000070035,
+          "endToEndMs": 75.70000000298023,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0297
+            }
+          ],
+          "inferenceMs": 24.5,
+          "searchMs": 47.76500000001397,
+          "endToEndMs": 80.1000000089407,
+          "recall": 1,
+          "ndcg": 0.9197207891481876,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0317
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 19.200000002980232,
+          "searchMs": 45.06319999997504,
+          "endToEndMs": 72.19999998807907,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 25,
+          "searchMs": 46.725300000049174,
+          "endToEndMs": 79.5,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.031
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 20.299999997019768,
+          "searchMs": 44.546099999919534,
+          "endToEndMs": 72.20000000298023,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 25.69999998807907,
+          "searchMs": 45.834499999997206,
+          "endToEndMs": 79.69999998807907,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 21.900000005960464,
+          "searchMs": 46.6919999999227,
+          "endToEndMs": 75.90000000596046,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0297
+            }
+          ],
+          "inferenceMs": 23.5,
+          "searchMs": 45.45230000000447,
+          "endToEndMs": 76.5,
+          "recall": 1,
+          "ndcg": 0.9197207891481876,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0317
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 19.200000002980232,
+          "searchMs": 45.39350000000559,
+          "endToEndMs": 72.40000000596046,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 25.200000002980232,
+          "searchMs": 46.15749999997206,
+          "endToEndMs": 79.40000000596046,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        }
+      ],
+      "medianSearchMs": 45.8551500000176,
+      "medianEndToEndMs": 75.80000000447035,
+      "recallAt5": 0.8333333333333334,
+      "ndcgAt5": 0.7961574880417603
+    },
+    {
+      "config": {
+        "label": "INT8 / WASM / batch 8",
+        "dtype": "q8",
+        "backend": "wasm",
+        "batch": 8
+      },
+      "actualBackend": {
+        "device": "wasm",
+        "dtype": "q8",
+        "reason": "已显式选择 WASM，用于降级验证/基线比较",
+        "loadMs": 826.5,
+        "model": "Xenova/multilingual-e5-small",
+        "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78"
+      },
+      "loadMs": 909.9000000059605,
+      "firstQueryMs": 74.29999999701977,
+      "corpusEmbeddingMs": [
+        733.5999999940395,
+        734.4000000059605,
+        737.6000000089407
+      ],
+      "documentsPerSecond": 16.339869280913135,
+      "lastWrite": {
+        "count": 12,
+        "writeMs": 39.50130000000354,
+        "refreshMs": 603.1440999999177
+      },
+      "raw": [
+        {
+          "repeat": 0,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.031
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0303
+            }
+          ],
+          "inferenceMs": 20.799999997019768,
+          "searchMs": 45.7554999999702,
+          "endToEndMs": 74.09999999403954,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 25.80000001192093,
+          "searchMs": 47.836200000019744,
+          "endToEndMs": 80.40000000596046,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 22.399999991059303,
+          "searchMs": 46.010099999955855,
+          "endToEndMs": 75.5,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0306
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0297
+            }
+          ],
+          "inferenceMs": 27.200000002980232,
+          "searchMs": 45.81070000003092,
+          "endToEndMs": 80.20000000298023,
+          "recall": 1,
+          "ndcg": 0.9197207891481876,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.032
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 17.599999994039536,
+          "searchMs": 46.89049999997951,
+          "endToEndMs": 71.69999998807907,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 0,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 23.200000002980232,
+          "searchMs": 45.556199999991804,
+          "endToEndMs": 75.70000000298023,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.031
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0303
+            }
+          ],
+          "inferenceMs": 19.200000002980232,
+          "searchMs": 45.8403999999864,
+          "endToEndMs": 72.20000000298023,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 24,
+          "searchMs": 44.83409999997821,
+          "endToEndMs": 75.5,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 16.299999997019768,
+          "searchMs": 44.78549999999814,
+          "endToEndMs": 68.79999999701977,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0306
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0297
+            }
+          ],
+          "inferenceMs": 25,
+          "searchMs": 47.043499999912456,
+          "endToEndMs": 79.70000000298023,
+          "recall": 1,
+          "ndcg": 0.9197207891481876,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.032
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 13.199999988079071,
+          "searchMs": 46.75679999997374,
+          "endToEndMs": 67.5,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 1,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 17.200000002980232,
+          "searchMs": 47.59600000001956,
+          "endToEndMs": 71.79999999701977,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.032
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.031
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0303
+            }
+          ],
+          "inferenceMs": 14.5,
+          "searchMs": 47.112000000081025,
+          "endToEndMs": 68.40000000596046,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.03
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 18.100000008940697,
+          "searchMs": 46.534100000048056,
+          "endToEndMs": 71.6000000089407,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0306
+            }
+          ],
+          "inferenceMs": 24,
+          "searchMs": 44.912800000049174,
+          "endToEndMs": 75.90000000596046,
+          "recall": 0.5,
+          "ndcg": 0.6131471927654584,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0306
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0297
+            }
+          ],
+          "inferenceMs": 25.200000002980232,
+          "searchMs": 43.86100000003353,
+          "endToEndMs": 75.79999999701977,
+          "recall": 1,
+          "ndcg": 0.9197207891481876,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.032
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.032
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 13.899999991059303,
+          "searchMs": 47.23800000001211,
+          "endToEndMs": 68.20000000298023,
+          "recall": 1,
+          "ndcg": 1,
+          "actualDevice": "wasm"
+        },
+        {
+          "repeat": 2,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0156
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0154
+            }
+          ],
+          "inferenceMs": 25.900000005960464,
+          "searchMs": 46.432099999976344,
+          "endToEndMs": 79.90000000596046,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "wasm"
+        }
+      ],
+      "medianSearchMs": 46.2210999999661,
+      "medianEndToEndMs": 74.79999999701977,
+      "recallAt5": 0.8333333333333334,
+      "ndcgAt5": 0.7961574880417603
+    },
+    {
+      "config": {
+        "label": "INT8 / Auto WebGPU / batch 8",
+        "dtype": "q8",
+        "backend": "auto",
+        "batch": 8
+      },
+      "actualBackend": {
+        "device": "webgpu",
+        "dtype": "q8",
+        "reason": "本地 WebGPU 推理",
+        "loadMs": 929.1000000089407,
+        "model": "Xenova/multilingual-e5-small",
+        "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78"
+      },
+      "loadMs": 1022.2999999970198,
+      "firstQueryMs": 365.40000000596046,
+      "corpusEmbeddingMs": [
+        1179.9999999850988,
+        804.6000000089407,
+        789.2999999970198
+      ],
+      "documentsPerSecond": 14.914243101996838,
+      "lastWrite": {
+        "count": 12,
+        "writeMs": 30.403699999907985,
+        "refreshMs": 502.8583000000799
+      },
+      "raw": [
+        {
+          "repeat": 0,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0318
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 199.1000000089407,
+          "searchMs": 47.33880000002682,
+          "endToEndMs": 255.20000000298023,
+          "recall": 0.5,
+          "ndcg": 0.3065735963827292,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 0,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.032
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0298
+            }
+          ],
+          "inferenceMs": 191,
+          "searchMs": 45.97529999993276,
+          "endToEndMs": 243.59999999403954,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 0,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0305
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0304
+            }
+          ],
+          "inferenceMs": 188.5,
+          "searchMs": 43.68429999996442,
+          "endToEndMs": 239.90000000596046,
+          "recall": 0.5,
+          "ndcg": 0.38685280723454163,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 0,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0311
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.031
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            }
+          ],
+          "inferenceMs": 189.40000000596046,
+          "searchMs": 43.63790000008885,
+          "endToEndMs": 240,
+          "recall": 1,
+          "ndcg": 0.8503449055347546,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 0,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0305
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0298
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0164
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0161
+            }
+          ],
+          "inferenceMs": 183.70000000298023,
+          "searchMs": 44.74360000004526,
+          "endToEndMs": 235.09999999403954,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 0,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0318
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.031
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0161
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0159
+            }
+          ],
+          "inferenceMs": 189.70000000298023,
+          "searchMs": 43.67240000003949,
+          "endToEndMs": 240.30000001192093,
+          "recall": 1,
+          "ndcg": 0.5,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 1,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0318
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 184.29999999701977,
+          "searchMs": 45.13510000007227,
+          "endToEndMs": 236.09999999403954,
+          "recall": 0.5,
+          "ndcg": 0.3065735963827292,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 1,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.032
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0298
+            }
+          ],
+          "inferenceMs": 188.6000000089407,
+          "searchMs": 44.73589999997057,
+          "endToEndMs": 239.8999999910593,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 1,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0305
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0304
+            }
+          ],
+          "inferenceMs": 178.29999999701977,
+          "searchMs": 47.1545000000624,
+          "endToEndMs": 232,
+          "recall": 0.5,
+          "ndcg": 0.38685280723454163,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 1,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0311
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.031
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            }
+          ],
+          "inferenceMs": 181.20000000298023,
+          "searchMs": 44.287899999995716,
+          "endToEndMs": 232.3999999910593,
+          "recall": 1,
+          "ndcg": 0.8503449055347546,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 1,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0305
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0298
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0164
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0161
+            }
+          ],
+          "inferenceMs": 194.59999999403954,
+          "searchMs": 45.77019999991171,
+          "endToEndMs": 247.30000001192093,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 1,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0318
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.031
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0161
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0159
+            }
+          ],
+          "inferenceMs": 177.59999999403954,
+          "searchMs": 43.65649999992456,
+          "endToEndMs": 227.79999999701977,
+          "recall": 1,
+          "ndcg": 0.5,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 2,
+          "query": "如何保证机器学习实验可以复现？",
+          "relevant": [
+            "02-研究复现.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0323
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0318
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0304
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0299
+            }
+          ],
+          "inferenceMs": 184.79999999701977,
+          "searchMs": 43.97039999999106,
+          "endToEndMs": 236.40000000596046,
+          "recall": 0.5,
+          "ndcg": 0.3065735963827292,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 2,
+          "query": "浏览器没有 WebGPU 时如何在本地生成向量？",
+          "relevant": [
+            "03-端侧隐私.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.032
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0298
+            }
+          ],
+          "inferenceMs": 188.79999999701977,
+          "searchMs": 44.25459999998566,
+          "endToEndMs": 239.69999998807907,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 2,
+          "query": "模型量化后的检索质量应该怎样评估？",
+          "relevant": [
+            "04-量化笔记.md",
+            "12-Model-evaluation.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "39f16c832120f9e7a5ce09a241f1cdf37ec7f5b3ae4b9a62c98f1f3a3fc9725d",
+              "text": "INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。",
+              "source": "04-量化笔记.md",
+              "distance": 0.032
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.031
+            },
+            {
+              "id": "cc8751b781cbad7d277d31ee1ff5e45c683585b40ca613d4a6c103c4b6bdec0c",
+              "text": "浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。",
+              "source": "03-端侧隐私.md",
+              "distance": 0.0305
+            },
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0304
+            }
+          ],
+          "inferenceMs": 184,
+          "searchMs": 45.17180000001099,
+          "endToEndMs": 235.70000000298023,
+          "recall": 0.5,
+          "ndcg": 0.38685280723454163,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 2,
+          "query": "seekdb 如何同时结合关键词和语义进行搜索？",
+          "relevant": [
+            "05-混合检索.md",
+            "11-Retrieval.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0328
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0313
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.0311
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.031
+            },
+            {
+              "id": "c858640c2901297ea539335508c5c0f8c4c85712cd6ce91f4c694e95f25bfe69",
+              "text": "Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk.",
+              "source": "11-Retrieval.md",
+              "distance": 0.0308
+            }
+          ],
+          "inferenceMs": 184.5,
+          "searchMs": 44.8515999999363,
+          "endToEndMs": 235.8999999910593,
+          "recall": 1,
+          "ndcg": 0.8503449055347546,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 2,
+          "query": "论文阅读时应当记录哪些信息？",
+          "relevant": [
+            "08-文献阅读.md"
+          ],
+          "hits": [
+            {
+              "id": "0d76ff29bf178d000acc29ccfa772a157068c15b66d551c041f97acab97c257c",
+              "text": "机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。",
+              "source": "02-研究复现.md",
+              "distance": 0.0315
+            },
+            {
+              "id": "675ad43d4671e8cfb07820746f5f39fe5e7ec7d692b8af8d25803f9315fe43a1",
+              "text": "阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。",
+              "source": "08-文献阅读.md",
+              "distance": 0.0305
+            },
+            {
+              "id": "043b39e22193f2d9dbbf7e6fe77db455102bf29a0a3e1e4bf04d749e69b924e3",
+              "text": "会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。",
+              "source": "07-会议模板.md",
+              "distance": 0.0298
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0164
+            },
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0161
+            }
+          ],
+          "inferenceMs": 179.70000000298023,
+          "searchMs": 45.975199999986216,
+          "endToEndMs": 232.5,
+          "recall": 1,
+          "ndcg": 0.6309297535714575,
+          "actualDevice": "webgpu"
+        },
+        {
+          "repeat": 2,
+          "query": "怎样让刚导入的文档立即可检索？",
+          "relevant": [
+            "09-索引刷新.md"
+          ],
+          "hits": [
+            {
+              "id": "6f93c6f2b1ab62b6b3ad12f17b939e60b8bd7883f36162828bab17255598d88f",
+              "text": "seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。",
+              "source": "05-混合检索.md",
+              "distance": 0.0325
+            },
+            {
+              "id": "75c043dbbe38c9d3b7b0cf81dc513c53d99f9b57d09acad9ae5199aeddd32a7d",
+              "text": "HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。",
+              "source": "01-索引笔记.md",
+              "distance": 0.0318
+            },
+            {
+              "id": "0330b54a48bb87cf1a40922d2f2d243232c28f9bd6eac60dfc9ebb290c4854fc",
+              "text": "增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。",
+              "source": "09-索引刷新.md",
+              "distance": 0.031
+            },
+            {
+              "id": "17c072161d6e803b477b832a0a67f756fbe8b24248cc20ead45029c2f14cd20e",
+              "text": "For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs.",
+              "source": "12-Model-evaluation.md",
+              "distance": 0.0161
+            },
+            {
+              "id": "601d646935e171d9e3de5c031c6d0eb68014123bf11a0e6b1edd5d57db59d908",
+              "text": "间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。",
+              "source": "06-复习方法.md",
+              "distance": 0.0159
+            }
+          ],
+          "inferenceMs": 186.5,
+          "searchMs": 46.072999999974854,
+          "endToEndMs": 239.5,
+          "recall": 1,
+          "ndcg": 0.5,
+          "actualDevice": "webgpu"
+        }
+      ],
+      "medianSearchMs": 44.79759999999078,
+      "medianEndToEndMs": 237.95000000298023,
+      "recallAt5": 0.8333333333333334,
+      "ndcgAt5": 0.5509384693824901
+    }
+  ]
+}

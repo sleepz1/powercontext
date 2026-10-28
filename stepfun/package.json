@@ -1,0 +1,38 @@
+{
+  "name": "localfolio-seekdb",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/copy-runtime.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "server": "tsx server/index.ts",
+    "build": "node scripts/copy-runtime.mjs && tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "tsx --test tests/*.test.ts",
+    "models": "node scripts/download-model.mjs",
+    "test:browser": "tsx scripts/browser-check.ts",
+    "test:db": "tsx scripts/db-check.ts"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "3.8.1",
+    "express": "5.1.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "seekdb": "1.4.0"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.3",
+    "@types/node": "22.18.6",
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9",
+    "playwright": "1.56.1",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "vite": "7.3.7"
+  },
+  "overrides": {
+    "sharp": "0.35.5",
+    "adm-zip": "0.6.1"
+  }
+}

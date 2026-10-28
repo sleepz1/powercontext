@@ -1,0 +1,7 @@
+import { defineConfig } from 'vite';
+export default defineConfig({
+  server: { host: '127.0.0.1', port: 5173, strictPort: true,
+    proxy: { '/api': 'http://127.0.0.1:8787', '/ort': 'http://127.0.0.1:8787' } },
+  worker: { format: 'es' },
+  build: { copyPublicDir: false },
+});

@@ -1,0 +1,14 @@
+[
+  {"source":"01-索引笔记.md","text":"HNSW 是用于近似最近邻检索的分层图索引。向量维度越高，距离计算成本越大。批量构建向量索引有助于提升文档导入效率。"},
+  {"source":"02-研究复现.md","text":"机器学习实验复现需要固定随机种子，记录依赖版本、数据集切分、训练参数和硬件环境。评估集应避免泄漏到训练过程。"},
+  {"source":"03-端侧隐私.md","text":"浏览器端侧推理将 embedding 向量计算保留在用户设备。WebGPU 通常适合并行矩阵计算，不支持时可以降级到 WASM。下载模型不等于云端推理。"},
+  {"source":"04-量化笔记.md","text":"INT8 量化用八位整数表示模型权重，通常能降低模型存储体积。应在同一语料和查询集上测量量化前后的 Recall@K 和 nDCG@K，确认质量变化。"},
+  {"source":"05-混合检索.md","text":"seekdb 支持向量检索与全文检索的数据库内混合检索。RRF 可以结合两路排名，兼顾语义相似和关键词命中。应用无需在浏览器拼合两路结果。"},
+  {"source":"06-复习方法.md","text":"间隔重复可以帮助长期记忆。复习安排可以结合学习目标、上次学习时间和知识点掌握程度，优先复习容易遗忘的内容。"},
+  {"source":"07-会议模板.md","text":"会议纪要应记录决策、行动项、负责人和截止日期。生成周报时，从本周完成的任务、未完成事项及下周计划三个部分组织材料。"},
+  {"source":"08-文献阅读.md","text":"阅读论文时先提取问题定义、研究方法、数据集、主要结论和局限性。为摘录保留原文出处，便于回到论文上下文核对。"},
+  {"source":"09-索引刷新.md","text":"增量写入 seekdb 后需要按 SDK 接口刷新索引，再查询新增文档。批处理结束后统一刷新，可以减少频繁刷新带来的开销。"},
+  {"source":"10-步行推荐.md","text":"高德周边推荐需要查询真实地点和步行路线。步行时间必须来自路线规划，不可用直线距离换算。未核实的营业状态不应编造。"},
+  {"source":"11-Retrieval.md","text":"Hybrid retrieval combines keyword matching and semantic similarity. Reciprocal rank fusion merges rankings inside the database. Keep the source document attached to each chunk."},
+  {"source":"12-Model-evaluation.md","text":"For a reproducible benchmark, fix the browser, device, embedding model revision, corpus and queries. Separate cold model loading from warm inference and report the median of repeated runs."}
+]

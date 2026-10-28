@@ -1,0 +1,8 @@
+[
+  {"query":"如何保证机器学习实验可以复现？","relevant":["02-研究复现.md","12-Model-evaluation.md"]},
+  {"query":"浏览器没有 WebGPU 时如何在本地生成向量？","relevant":["03-端侧隐私.md"]},
+  {"query":"模型量化后的检索质量应该怎样评估？","relevant":["04-量化笔记.md","12-Model-evaluation.md"]},
+  {"query":"seekdb 如何同时结合关键词和语义进行搜索？","relevant":["05-混合检索.md","11-Retrieval.md"]},
+  {"query":"论文阅读时应当记录哪些信息？","relevant":["08-文献阅读.md"]},
+  {"query":"怎样让刚导入的文档立即可检索？","relevant":["09-索引刷新.md"]}
+]

@@ -1,0 +1,469 @@
+{
+  "at": "2026-10-28T11:08:58.491Z",
+  "appUrl": "http://127.0.0.1:8787",
+  "checks": [
+    "real browser WASM embedding",
+    "repeat import: 12 -> 12",
+    "incremental import: 12 -> 13",
+    "new document appears in hybrid query",
+    "empty isolated collection",
+    "auto backend with numeric guard",
+    "390px responsive viewport without horizontal overflow",
+    "no external HTTP requests"
+  ],
+  "firstInitializationInFreshBrowserContext": {
+    "info": {
+      "device": "wasm",
+      "dtype": "q8",
+      "reason": "已显式选择 WASM，用于降级验证/基线比较",
+      "loadMs": 1424.699999988079,
+      "model": "Xenova/multilingual-e5-small",
+      "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78"
+    },
+    "measurements": [
+      {
+        "at": "2026-10-28T11:08:52.087Z",
+        "stage": "model_load_or_reuse",
+        "ms": 1425.1000000089407,
+        "device": "wasm",
+        "dtype": "q8"
+      },
+      {
+        "at": "2026-10-28T11:08:52.217Z",
+        "stage": "document_embedding",
+        "ms": 126,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.275Z",
+        "stage": "document_embedding",
+        "ms": 37.5,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.329Z",
+        "stage": "document_embedding",
+        "ms": 48.79999999701977,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.380Z",
+        "stage": "document_embedding",
+        "ms": 50.79999999701977,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.429Z",
+        "stage": "document_embedding",
+        "ms": 46.79999999701977,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.462Z",
+        "stage": "document_embedding",
+        "ms": 31.80000001192093,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.499Z",
+        "stage": "document_embedding",
+        "ms": 37.20000000298023,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.540Z",
+        "stage": "document_embedding",
+        "ms": 40.599999994039536,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.583Z",
+        "stage": "document_embedding",
+        "ms": 42.5,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.622Z",
+        "stage": "document_embedding",
+        "ms": 38.5,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.661Z",
+        "stage": "document_embedding",
+        "ms": 38.8999999910593,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.706Z",
+        "stage": "document_embedding",
+        "ms": 40.599999994039536,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.565Z",
+        "stage": "database_write",
+        "ms": 46.86860000016168,
+        "count": 12
+      },
+      {
+        "at": "2026-10-28T11:08:53.565Z",
+        "stage": "index_refresh",
+        "ms": 803.3477000000421
+      }
+    ]
+  },
+  "warmedInteractiveQuery": {
+    "measurements": [
+      {
+        "at": "2026-10-28T11:08:52.087Z",
+        "stage": "model_load_or_reuse",
+        "ms": 1425.1000000089407,
+        "device": "wasm",
+        "dtype": "q8"
+      },
+      {
+        "at": "2026-10-28T11:08:52.217Z",
+        "stage": "document_embedding",
+        "ms": 126,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.275Z",
+        "stage": "document_embedding",
+        "ms": 37.5,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.329Z",
+        "stage": "document_embedding",
+        "ms": 48.79999999701977,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.380Z",
+        "stage": "document_embedding",
+        "ms": 50.79999999701977,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.429Z",
+        "stage": "document_embedding",
+        "ms": 46.79999999701977,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.462Z",
+        "stage": "document_embedding",
+        "ms": 31.80000001192093,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.499Z",
+        "stage": "document_embedding",
+        "ms": 37.20000000298023,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.540Z",
+        "stage": "document_embedding",
+        "ms": 40.599999994039536,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.583Z",
+        "stage": "document_embedding",
+        "ms": 42.5,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.622Z",
+        "stage": "document_embedding",
+        "ms": 38.5,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.661Z",
+        "stage": "document_embedding",
+        "ms": 38.8999999910593,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:52.706Z",
+        "stage": "document_embedding",
+        "ms": 40.599999994039536,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.565Z",
+        "stage": "database_write",
+        "ms": 46.86860000016168,
+        "count": 12
+      },
+      {
+        "at": "2026-10-28T11:08:53.565Z",
+        "stage": "index_refresh",
+        "ms": 803.3477000000421
+      },
+      {
+        "at": "2026-10-28T11:08:53.614Z",
+        "stage": "model_load_or_reuse",
+        "ms": 0.4000000059604645,
+        "device": "wasm",
+        "dtype": "q8"
+      },
+      {
+        "at": "2026-10-28T11:08:53.655Z",
+        "stage": "document_embedding",
+        "ms": 40.20000000298023,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.690Z",
+        "stage": "document_embedding",
+        "ms": 34.8999999910593,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.736Z",
+        "stage": "document_embedding",
+        "ms": 45.599999994039536,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.782Z",
+        "stage": "document_embedding",
+        "ms": 46.20000000298023,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.824Z",
+        "stage": "document_embedding",
+        "ms": 42,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.854Z",
+        "stage": "document_embedding",
+        "ms": 30.200000002980232,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.889Z",
+        "stage": "document_embedding",
+        "ms": 34.79999999701977,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.925Z",
+        "stage": "document_embedding",
+        "ms": 35.900000005960464,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:53.964Z",
+        "stage": "document_embedding",
+        "ms": 38.70000000298023,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:54.005Z",
+        "stage": "document_embedding",
+        "ms": 40.70000000298023,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:54.041Z",
+        "stage": "document_embedding",
+        "ms": 36,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:54.084Z",
+        "stage": "document_embedding",
+        "ms": 39.599999994039536,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:54.622Z",
+        "stage": "database_write",
+        "ms": 30.118000000016764,
+        "count": 12
+      },
+      {
+        "at": "2026-10-28T11:08:54.622Z",
+        "stage": "index_refresh",
+        "ms": 502.9043000000529
+      },
+      {
+        "at": "2026-10-28T11:08:54.636Z",
+        "stage": "model_load_or_reuse",
+        "ms": 0.09999999403953552,
+        "device": "wasm",
+        "dtype": "q8"
+      },
+      {
+        "at": "2026-10-28T11:08:54.660Z",
+        "stage": "document_embedding",
+        "ms": 23.799999997019768,
+        "count": 1,
+        "dtype": "q8",
+        "batch": 1,
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:55.172Z",
+        "stage": "database_write",
+        "ms": 4.063899999950081,
+        "count": 1
+      },
+      {
+        "at": "2026-10-28T11:08:55.172Z",
+        "stage": "index_refresh",
+        "ms": 502.55649999994785
+      },
+      {
+        "at": "2026-10-28T11:08:55.222Z",
+        "stage": "query_embedding",
+        "ms": 14,
+        "dtype": "q8",
+        "device": "wasm"
+      },
+      {
+        "at": "2026-10-28T11:08:55.283Z",
+        "stage": "database_search",
+        "ms": 55.657400000141934
+      },
+      {
+        "at": "2026-10-28T11:08:55.296Z",
+        "stage": "query_to_paint",
+        "ms": 89.59999999403954
+      }
+    ],
+    "topSource": "增量验证.md"
+  },
+  "autoBackend": {
+    "device": "wasm",
+    "dtype": "q8",
+    "reason": "WebGPU 不可用，自动降级 WASM：Error: 后端一致性检查未通过（最小余弦 0.7188 < 0.99）",
+    "consistency": {
+      "minimumCosine": 0.718774124555215,
+      "threshold": 0.99,
+      "samples": 3
+    },
+    "loadMs": 2232.6000000089407,
+    "model": "Xenova/multilingual-e5-small",
+    "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78"
+  },
+  "errors": [],
+  "externalRequests": [],
+  "note": "Fresh isolated browser context; server files and OS caches may already be warm. Initialization is not an internet download benchmark."
+}
