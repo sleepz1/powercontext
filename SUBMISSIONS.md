@@ -5,7 +5,7 @@
 
 | 题目 | 材料位置 | 当前状态 |
 | --- | --- | --- |
-| 03 Qoder 提效项目 | qoder/researchloop/（README、DEVLOG、functions、server、src、site、results/seekdb-verify.json） | 核心应用已完成并在本机跑通真实 seekdb：30/30 端到端断言通过、生产构建通过；作品介绍静态站已公开（https://yantu-researchloop-lr92v5hwg45.qoder.website），四张真实界面截图已补入 site/screenshots/ |
+| 03 Qoder 提效项目 | qoder/researchloop/（源码、README、DEVLOG、真实截图、验收记录） | 2026-10-28 22:23 独立提测；平台显示待执行，暂无分数 |
 | 04 端侧推理 + 混合检索 | stepfun/ 全部源码、README、output/pdf/technical-report.pdf、results/ | 2026-10-28 22:06 独立提测；平台执行成功，20.000 / 20 分 |
 | 06 高德周边 Skill | gaode/SKILL.md | 2026-10-28 22:04 独立提测；平台执行成功，20.000 / 20 分 |
 
@@ -19,4 +19,6 @@
 
 记录页：[04](https://open.oceanbase.com/train/TestRecord?questionId=600073) · [06](https://open.oceanbase.com/train/TestRecord?questionId=600074)。截图保存在本机提交材料目录 `E:/project/submissions/ecosystem-03-04-06/receipts/`。
 
-03 尚未提测；主体开发、真实数据库验收、桌面浏览器操作与公开站点发布已完成。
+03 已于 2026-10-28 22:23 独立提测，使用 `feature/researchloop-qoder` 分支、Commit `498db1a0da6622bf5f44ae49459fca176985cc37`（文件树与本地 `7a89b6f` 完全一致），提交作品链接 [研途 ResearchLoop](https://yantu-researchloop-lr92v5hwg45.qoder.website)。[03 提测记录](https://open.oceanbase.com/train/TestRecord?questionId=600078) 当前为待执行，不将提交成功当作评分通过。
+
+03 本次实际表单包含团队仓库、Commit、Branch、作品链接，未提供 UID 或附件字段。开发记录导出与真实截图已在源码中；Qoder 账号 UID 尚未可靠核对，已向参赛者请求补充，不填写猜测值。若后续人工评审要求补交原始 Qoder 对话截图或 UID，应按平台说明补充。

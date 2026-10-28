@@ -1,10 +1,10 @@
 # 2026 生态赛：03 / 04 / 06
 
-此私有仓库基于官方 `oceanbase/powercontext` 的 `2026-competition-ecosystem` 分支，保留官方初始提交。工作分支为 `codex/ecosystem-03-04-06`，每题使用自己的目录和提交材料。
+本项目基于官方 `oceanbase/powercontext` 的 `2026-competition-ecosystem` 分支，保留官方初始提交。各题使用独立目录，在 `feature/*` 分支提测。
 
 | 题目 | 源码 / 材料 | 当前进展 |
 | --- | --- | --- |
-| 03 Qoder 提效项目「研途」 | [运行与验收](qoder/researchloop/README.md) | Qoder 主体开发已完成，真实 seekdb 验收 30/30；[展示站已公开](https://yantu-researchloop-lr92v5hwg45.qoder.website) |
+| 03 Qoder 提效项目「研途」 | [运行与验收](qoder/researchloop/README.md) · [公开作品站](https://yantu-researchloop-lr92v5hwg45.qoder.website) | Qoder 主体开发已完成，真实 seekdb 验收 30/30；已独立提测，等待平台执行 |
 | 04 端侧 AI 与 seekdb「知页」 | [运行说明](stepfun/README.md) · [一页报告](stepfun/output/pdf/technical-report.pdf) | 已独立提测，平台 20.000 / 20 分 |
 | 06 高德附近推荐 | [SKILL.md](gaode/SKILL.md) | 已独立提测，平台 20.000 / 20 分 |
 
